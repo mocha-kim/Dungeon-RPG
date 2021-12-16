@@ -11,7 +11,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private LayerMask groundLayerMask;
 
     private NavMeshAgent agent;
-    private Camera camera;
+    private new Camera camera;
 
     [SerializeField] private Animator animator;
 

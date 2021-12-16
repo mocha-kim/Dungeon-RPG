@@ -15,7 +15,7 @@ public class RigidBodyCharacter : MonoBehaviour
 
     private bool isGrounded = false;
 
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
     private Vector3 inputDirection = Vector3.zero;
 
     #endregion Variables

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class TopDownCamera : MonoBehaviour
 {
     #region Variables
@@ -20,7 +22,6 @@ public class TopDownCamera : MonoBehaviour
 
     private void Start()
     {
-        refVelocity = Vector3.zero;
         HandleCamera();
     }
 
@@ -29,24 +30,27 @@ public class TopDownCamera : MonoBehaviour
         HandleCamera();
     }
 
-    private void HandleCamera()
+    public void HandleCamera()
     {
         if (!target) return;
 
         // Calc world position vector
         Vector3 worldPosition = (Vector3.forward * -distance) + (Vector3.up * height);
+        Debug.DrawLine(target.position, worldPosition, Color.red);
 
         // Calc rotate vector
         Vector3 rotatedVector = Quaternion.AngleAxis(angle, Vector3.up) * worldPosition;
+        Debug.DrawLine(target.position, rotatedVector, Color.green);
 
         // Move camera position
         Vector3 flatTargetPosition = target.position;
         flatTargetPosition.y += lookAtHeight;
 
         Vector3 finalPosition = flatTargetPosition + rotatedVector;
+        Debug.DrawLine(target.position, finalPosition, Color.blue);
 
         transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refVelocity, smoothSpeed);
-        transform.LookAt(target.position);
+        //transform.LookAt(target.position);
     }
 
     private void OnDrawGizmos()

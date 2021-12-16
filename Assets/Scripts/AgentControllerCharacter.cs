@@ -12,7 +12,7 @@ public class AgentControllerCharacter : MonoBehaviour
 
     private CharacterController characterController;
     private NavMeshAgent agent;
-    private Camera camera;
+    private new Camera camera;
 
     #endregion Variables
 
