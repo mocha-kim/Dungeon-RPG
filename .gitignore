@@ -61,3 +61,5 @@ crashlytics-build.properties
 # Charged Asset
 [Aa]ssets/PolygonDungeon/
 PolygonDungeon.meta
+[Aa]ssets/PolygonDungeonMap/
+PolygonDungeonMap.meta

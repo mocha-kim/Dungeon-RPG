@@ -50,7 +50,7 @@ public class TopDownCamera : MonoBehaviour
         Debug.DrawLine(target.position, finalPosition, Color.blue);
 
         transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refVelocity, smoothSpeed);
-        //transform.LookAt(target.position);
+        transform.LookAt(target.transform);
     }
 
     private void OnDrawGizmos()
