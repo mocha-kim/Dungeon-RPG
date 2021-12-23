@@ -6,8 +6,8 @@ public class FieldOfView : MonoBehaviour
 {
     #region Variables
 
+    public float delay = 0.2f;
     public float viewRadius = 5f;
-
     [Range(0, 360)]
     public float viewAngle = 90f;
 
@@ -26,13 +26,22 @@ public class FieldOfView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine("FindTargetsWithDelay", delay);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    IEnumerator FindTargetsWithDelay(float delay)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(delay);
+            FindVisibleTargets();
+        }
     }
 
     void FindVisibleTargets()
