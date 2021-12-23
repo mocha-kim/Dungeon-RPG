@@ -12,11 +12,15 @@ namespace Unity_RPG.Characters
         #region Variables
 
         protected StateMachine<EnemyController> stateMachine;
+        public StateMachine<EnemyController> StateMachine => stateMachine;
 
-        public LayerMask targetMask;
-        public Transform target;
-        public float viewRadius = 5f;
-        public float AttackRange = 1.5f;
+        private FieldOfView fov;
+
+        //public LayerMask targetMask;
+        //public Transform target;
+        //public float viewRadius = 5f;
+        public float attackRange = 1.5f;
+        public Transform Target => fov?.NearestTarget;
 
         #endregion Variables
 
@@ -26,6 +30,8 @@ namespace Unity_RPG.Characters
             stateMachine = new StateMachine<EnemyController>(this, new IdleState());
             stateMachine.AddState(new MoveState());
             stateMachine.AddState(new AttackState());
+
+            fov = GetComponent<FieldOfView>();
         }
 
         // Update is called once per frame
@@ -38,23 +44,25 @@ namespace Unity_RPG.Characters
         {
             get
             {
-                if (!target)
+                if (!Target)
                     return false;
 
-                float distance = Vector3.Distance(transform.position, target.position);
-                return (distance <= AttackRange);
+                float distance = Vector3.Distance(transform.position, Target.position);
+                return (distance <= attackRange);
             }
         }
 
         public Transform SearchEnemy()
         {
-            target = null;
+            //    target = null;
 
-            Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-            if (targetInViewRadius.Length > 0)
-                target = targetInViewRadius[0].transform;
+            //    Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+            //    if (targetInViewRadius.Length > 0)
+            //        target = targetInViewRadius[0].transform;
 
-            return target;
+            //    return target;
+
+            return Target;
         }
     }
 

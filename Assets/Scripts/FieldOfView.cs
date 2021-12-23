@@ -19,6 +19,7 @@ public class FieldOfView : MonoBehaviour
     private float distanceToTarget;
 
     public List<Transform> VisibleTargets => visibleTargets;
+    public Transform NearestTarget => nearestTarget;
 
     #endregion Variables
 
@@ -71,6 +72,6 @@ public class FieldOfView : MonoBehaviour
         if (!angleIsGlobal)
             angleInDeg += transform.eulerAngles.y;
 
-        return new Vector3(Mathf.Sin(angleInDeg / 2 * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDeg / 2 * Mathf.Deg2Rad));
+        return new Vector3(Mathf.Sin(angleInDeg * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDeg * Mathf.Deg2Rad));
     }
 }

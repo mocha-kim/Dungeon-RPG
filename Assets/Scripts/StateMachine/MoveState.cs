@@ -25,7 +25,7 @@ namespace Unity_RPG.AI
 
         public override void OnEnter()
         {
-            agent?.SetDestination(context.target.position);
+            agent?.SetDestination(context.Target.position);
             animator?.SetBool(hashMove, true);
         }
 
@@ -34,7 +34,7 @@ namespace Unity_RPG.AI
             Transform enemy = context.SearchEnemy();
             if (enemy)
             {
-                agent.SetDestination(context.target.position);
+                agent.SetDestination(context.Target.position);
                 if (agent.remainingDistance > agent.stoppingDistance)
                 {
                     controller.Move(agent.velocity * deltaTime);
