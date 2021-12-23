@@ -20881,12 +20881,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1316340324480884435, guid: 9b96858e748f843a88d17ed0b9ed48d1, type: 3}
-      propertyPath: viewAngle
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 1316340324480884435, guid: 9b96858e748f843a88d17ed0b9ed48d1, type: 3}
-      propertyPath: viewRadius
-      value: 10
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4008039701889947214, guid: 9b96858e748f843a88d17ed0b9ed48d1, type: 3}
       propertyPath: m_Layer

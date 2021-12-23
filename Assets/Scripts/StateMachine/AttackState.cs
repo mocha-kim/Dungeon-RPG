@@ -10,7 +10,8 @@ namespace Unity_RPG.AI
     {
         private Animator animator;
 
-        protected int hasAttack = Animator.StringToHash("Attack");
+        protected int hashAttack = Animator.StringToHash("Attack");
+        protected int hashRandomAttack = Animator.StringToHash("RandomAttack");
 
         public override void OnInitialized()
         {
@@ -19,18 +20,18 @@ namespace Unity_RPG.AI
 
         public override void OnEnter()
         {
-            Debug.Log(context.IsAvailableAttack);
             if (context.IsAvailableAttack)
-                animator?.SetBool(hasAttack, true);
+            {
+                animator?.SetInteger(hashRandomAttack, Random.Range(0, 1));
+                animator?.SetTrigger(hashAttack);
+            }
             else
+            {
                 stateMachine.ChangeState<IdleState>();
+            }
         }
 
         public override void Update(float deltaTime)
-        {
-        }
-
-        public override void OnExit()
         {
         }
     }
