@@ -39,18 +39,18 @@ namespace Unity_RPG.Cameras
 
             // Calc world position vector
             Vector3 worldPosition = (Vector3.forward * -distance) + (Vector3.up * height);
-            Debug.DrawLine(target.position, worldPosition, Color.red);
+            //Debug.DrawLine(target.position, worldPosition, Color.red);
 
             // Calc rotate vector
             Vector3 rotatedVector = Quaternion.AngleAxis(angle, Vector3.up) * worldPosition;
-            Debug.DrawLine(target.position, rotatedVector, Color.green);
+            //Debug.DrawLine(target.position, rotatedVector, Color.green);
 
             // Move camera position
             Vector3 flatTargetPosition = target.position;
             flatTargetPosition.y += lookAtHeight;
 
             Vector3 finalPosition = flatTargetPosition + rotatedVector;
-            Debug.DrawLine(target.position, finalPosition, Color.blue);
+            //Debug.DrawLine(target.position, finalPosition, Color.blue);
 
             transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refVelocity, smoothSpeed);
             transform.LookAt(target.transform);
