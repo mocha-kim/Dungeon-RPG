@@ -8,11 +8,16 @@ namespace Unity_RPG.AI
 
     public class IdleState : State<EnemyController>
     {
+        public bool isPatrol = false;
+        private float minIdleTime = 0.0f;
+        private float maxIdleTime = 3.0f;
+        private float idleTime = 0.0f;
+
         private Animator animator;
         private CharacterController controller;
 
-        protected int hasMove = Animator.StringToHash("Move");
-        protected int hasMoveSpeed = Animator.StringToHash("MoveSpeed");
+        protected int hashMove = Animator.StringToHash("Move");
+        protected int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
 
         public override void OnInitialized()
         {
@@ -22,9 +27,14 @@ namespace Unity_RPG.AI
 
         public override void OnEnter()
         {
-            animator?.SetBool(hasMove, false);
-            animator?.SetFloat(hasMoveSpeed, 0);
+            animator?.SetBool(hashMove, false);
+            animator?.SetFloat(hashMoveSpeed, 0);
             controller?.Move(Vector3.zero);
+
+            if (isPatrol)
+            {
+                idleTime = Random.Range(minIdleTime, maxIdleTime);
+            }
         }
 
         public override void Update(float deltaTime)
@@ -37,6 +47,10 @@ namespace Unity_RPG.AI
                     stateMachine.ChangeState<AttackState>();
                 else
                     stateMachine.ChangeState<MoveState>();
+            }
+            else if (isPatrol && stateMachine.ElapsedTimeInState > idleTime)
+            {
+                stateMachine.ChangeState<MoveToWaypoints>();
             }
         }
 

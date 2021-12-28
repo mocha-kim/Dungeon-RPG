@@ -3441,7 +3441,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 1.2
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -3461,7 +3461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f58a7f63a45094779906bc7a9868f788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1.5
+  attackRange: 1.2
+  waypoints: []
+  targetWaypoint: {fileID: 0}
 --- !u!114 &3872886728428277981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3474,6 +3476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0de5e83c8277433b9fb36e5b1b7db35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0.2
   viewRadius: 5
   viewAngle: 180
   targetMask:

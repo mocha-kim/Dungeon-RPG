@@ -22,16 +22,17 @@ namespace Unity_RPG.AI
         {
             if (context.IsAvailableAttack)
             {
-                animator?.SetInteger(hashRandomAttack, Random.Range(0, 1));
+                animator?.SetInteger(hashRandomAttack, Random.Range(0, 2));
                 animator?.SetTrigger(hashAttack);
             }
-            else
-            {
-                stateMachine.ChangeState<IdleState>();
-            }
+            stateMachine.ChangeState<IdleState>();
         }
 
         public override void Update(float deltaTime)
+        {
+        }
+
+        public override void OnExit()
         {
         }
     }

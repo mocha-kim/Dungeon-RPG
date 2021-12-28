@@ -21,13 +21,20 @@ namespace Unity_RPG.Characters
         //public float viewRadius = 5f;
         public float attackRange = 1.5f;
         public Transform Target => fov?.NearestTarget;
+        public Transform[] waypoints;
+        [HideInInspector]
+        public Transform targetWaypoint = null;
+        private int waypointIndex = 0;
 
         #endregion Variables
 
         // Start is called before the first frame update
         void Start()
         {
-            stateMachine = new StateMachine<EnemyController>(this, new IdleState());
+            stateMachine = new StateMachine<EnemyController>(this, new MoveToWaypoints());
+            IdleState idleState = new IdleState();
+            idleState.isPatrol = true;
+            stateMachine.AddState(idleState);
             stateMachine.AddState(new MoveState());
             stateMachine.AddState(new AttackState());
 
@@ -63,6 +70,19 @@ namespace Unity_RPG.Characters
             //    return target;
 
             return Target;
+        }
+
+        public Transform FindNextWaypoint()
+        {
+            targetWaypoint = null;
+            if (waypoints.Length > 0)
+            {
+                targetWaypoint = waypoints[waypointIndex];
+            }
+
+            waypointIndex = (waypointIndex + 1) % waypoints.Length;
+
+            return targetWaypoint;
         }
     }
 

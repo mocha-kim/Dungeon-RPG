@@ -7762,6 +7762,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1823843039759069247, guid: 5c93917e914a941e39e4e28d3b88520e, type: 3}
+      propertyPath: attackRange
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1823843039759069247, guid: 5c93917e914a941e39e4e28d3b88520e, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1823843039759069247, guid: 5c93917e914a941e39e4e28d3b88520e, type: 3}
+      propertyPath: waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1499992904}
+    - target: {fileID: -1823843039759069247, guid: 5c93917e914a941e39e4e28d3b88520e, type: 3}
+      propertyPath: waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1810192315}
     - target: {fileID: 5108763299546800094, guid: 5c93917e914a941e39e4e28d3b88520e, type: 3}
       propertyPath: m_RootOrder
       value: 1
