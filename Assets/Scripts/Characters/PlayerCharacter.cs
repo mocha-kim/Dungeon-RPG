@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Unity_RPG.Characters
+namespace RPG.Characters
 {
 
-    public class PlayerCharacter : MonoBehaviour
+    public class PlayerCharacter : MonoBehaviour, IAttackable, IDamagable
     {
         #region Variables
 
@@ -19,6 +19,11 @@ namespace Unity_RPG.Characters
         [SerializeField] private Animator animator;
 
         readonly int moveHash = Animator.StringToHash("Move");
+
+        public AttackBehaviour CurrentAttackBehaviour => throw new System.NotImplementedException();
+
+        public bool IsAlive => throw new System.NotImplementedException();
+
         //readonly int fallingHash = Animator.StringToHash("Falling");
 
         #endregion Variables
@@ -69,6 +74,16 @@ namespace Unity_RPG.Characters
         {
             animator.rootPosition = agent.nextPosition;
             transform.position = agent.nextPosition;
+        }
+
+        public void OnExcuteAttack(int attackIndex)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void TakeDamage(int damage, GameObject hitEffectPrefabs)
+        {
+            throw new System.NotImplementedException();
         }
     }
 

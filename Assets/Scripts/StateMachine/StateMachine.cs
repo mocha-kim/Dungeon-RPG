@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unity_RPG.AI
+namespace RPG.AI
 {
 
     public abstract class State<T>

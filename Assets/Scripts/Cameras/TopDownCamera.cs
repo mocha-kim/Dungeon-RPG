@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unity_RPG.Cameras
+namespace RPG.Cameras
 {
 
     [ExecuteInEditMode]

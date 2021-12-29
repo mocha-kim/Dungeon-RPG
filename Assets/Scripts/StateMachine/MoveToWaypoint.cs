@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity_RPG.Characters;
+using RPG.Characters;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Unity_RPG.AI
+namespace RPG.AI
 {
 
     public class MoveToWaypoints : State<EnemyController>

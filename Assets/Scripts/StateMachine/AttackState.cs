@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity_RPG.Characters;
+using RPG.Characters;
 using UnityEngine;
 
-namespace Unity_RPG.AI
+namespace RPG.AI
 {
 
     public class AttackState : State<EnemyController>
@@ -11,7 +11,6 @@ namespace Unity_RPG.AI
         private Animator animator;
 
         protected int hashAttack = Animator.StringToHash("Attack");
-        protected int hashRandomAttack = Animator.StringToHash("RandomAttack");
 
         public override void OnInitialized()
         {
@@ -22,7 +21,6 @@ namespace Unity_RPG.AI
         {
             if (context.IsAvailableAttack)
             {
-                animator?.SetInteger(hashRandomAttack, Random.Range(0, 2));
                 animator?.SetTrigger(hashAttack);
             }
             stateMachine.ChangeState<IdleState>();

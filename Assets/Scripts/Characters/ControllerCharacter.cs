@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unity_RPG.Characters
+namespace RPG.Characters
 {
 
     public class ControllerCharacter : MonoBehaviour

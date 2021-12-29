@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Unity_RPG.Characters
+namespace RPG.Characters
 {
 
     public class AgentControllerCharacter : MonoBehaviour

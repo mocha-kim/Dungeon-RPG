@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity_RPG.Cameras
+namespace RPG.Cameras
 {
 
     [CustomEditor (typeof(TopDownCamera))]
