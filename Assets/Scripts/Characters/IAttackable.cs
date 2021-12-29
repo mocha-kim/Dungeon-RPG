@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAttackable
+namespace RPG.Characters
 {
-    AttackBehaviour CurrentAttackBehaviour
+
+    public interface IAttackable
     {
-        get;
+        AttackBehaviour CurrentAttackBehaviour
+        {
+            get;
+        }
+
+        void OnExcuteAttack(int attackIndex);
     }
 
-    void OnExcuteAttack(int attackIndex);
 }

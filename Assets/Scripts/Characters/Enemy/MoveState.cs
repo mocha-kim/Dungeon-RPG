@@ -31,24 +31,33 @@ namespace RPG.AI
 
         public override void Update(float deltaTime)
         {
-            Transform enemy = context.SearchEnemy();
-            if (enemy)
+            if (context.Target)
             {
                 agent.SetDestination(context.Target.position);
-                if (agent.remainingDistance > agent.stoppingDistance)
-                {
-                    controller.Move(agent.velocity * deltaTime);
-                    animator.SetFloat(hashMoveSpeed, agent.velocity.magnitude / agent.speed, 1f, deltaTime);
-                    return;
-                }
             }
 
-            stateMachine.ChangeState<IdleState>();
+            controller.Move(agent.velocity * deltaTime);
+            if (agent.remainingDistance > agent.stoppingDistance)
+            {
+                animator.SetFloat(hashMoveSpeed, agent.velocity.magnitude / agent.speed, 1f, deltaTime);
+            }
+            else
+            {
+                if (!agent.pathPending)
+                {
+                    animator.SetFloat(hashMoveSpeed, 0f);
+                    animator.SetBool(hashIsMoving, false);
+                    agent.ResetPath();
+
+                    stateMachine.ChangeState<IdleState>();
+                }
+            }
         }
 
         public override void OnExit()
         {
-            animator?.SetBool(hashIsMoving, false);
+            animator.SetFloat(hashMoveSpeed, 0f);
+            animator.SetBool(hashIsMoving, false);
             agent.ResetPath();
         }
     }

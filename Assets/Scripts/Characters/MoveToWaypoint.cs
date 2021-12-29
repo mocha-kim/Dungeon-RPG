@@ -12,34 +12,42 @@ namespace RPG.AI
         private Animator animator;
         private CharacterController controller;
         private NavMeshAgent agent;
+        private EnemyController_Patrol patrolController;
 
-        protected int hashMove = Animator.StringToHash("Move");
+        protected int hashIsMoving = Animator.StringToHash("IsMoving");
         protected int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
+
+        private Transform targetWaypoint = null;
+        private int waypointIndex = 0;
+
+        private Transform[] Waypoints => ((EnemyController_Patrol)context)?.waypoints;
 
         public override void OnInitialized()
         {
             animator = context.GetComponent<Animator>();
             controller = context.GetComponent<CharacterController>();
             agent = context.GetComponent<NavMeshAgent>();
+
+            patrolController = context as EnemyController_Patrol;
         }
 
         public override void OnEnter()
         {
-            if (context.targetWaypoint == null)
-                context.FindNextWaypoint();
+            if (targetWaypoint == null)
+                FindNextWaypoint();
 
-            if (context.targetWaypoint)
+            if (targetWaypoint)
             {
-                agent?.SetDestination(context.targetWaypoint.position);
-                animator?.SetBool(hashMove, true);
+                agent?.SetDestination(targetWaypoint.position);
+                animator?.SetBool(hashIsMoving, true);
             }
+            else
+                stateMachine.ChangeState<IdleState>();
         }
 
         public override void Update(float deltaTime)
         {
-            Transform enemy = context.SearchEnemy();
-
-            if (enemy)
+            if (context.Target)
             {
                 if (context.IsAvailableAttack)
                     stateMachine.ChangeState<AttackState>();
@@ -50,11 +58,10 @@ namespace RPG.AI
             {
                 if (!agent.pathPending && (agent.remainingDistance <= agent.stoppingDistance))
                 {
-                    context.FindNextWaypoint();
+                    FindNextWaypoint();
                     //Transform nextDst = context.FindNextWaypoint();
                     //if (nextDst)
                     //    agent.SetDestination(nextDst.position);
-
                     stateMachine.ChangeState<IdleState>();
                 }
                 else
@@ -67,8 +74,20 @@ namespace RPG.AI
 
         public override void OnExit()
         {
-            animator?.SetBool(hashMove, false);
+            animator?.SetBool(hashIsMoving, false);
             agent.ResetPath();
+        }
+
+        public Transform FindNextWaypoint()
+        {
+            targetWaypoint = null;
+
+            if (Waypoints != null && Waypoints.Length > 0)
+            {
+                targetWaypoint = Waypoints[waypointIndex];
+                waypointIndex = (waypointIndex + 1) % Waypoints.Length;
+            }
+            return targetWaypoint;
         }
     }
 

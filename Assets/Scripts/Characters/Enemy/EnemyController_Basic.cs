@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using RPG.AI;
 
 namespace RPG.Characters
 {
-    public class EnemyController_Patrol : EnemyController, IDamagable
+    public class EnemyController_Basic : EnemyController, IDamagable, IAttackable
     {
         #region Variables
 
+        public Transform projectilePoint;
+        [SerializeField]
+        private List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
         public Collider weaponCollider;
         public Transform hitPoint;
         public GameObject hitEffect = null;
@@ -21,7 +25,42 @@ namespace RPG.Characters
             base.Start();
 
             stateMachine.AddState(new MoveState());
-            stateMachine.AddState(new MoveToWaypoints());
+            stateMachine.AddState(new AttackState());
+            stateMachine.AddState(new DeadState());
+            InitAttackBehaviour();
+        }
+
+        protected override void Update()
+        {
+
+            base.Update();
+        }
+
+        private void InitAttackBehaviour()
+        {
+            foreach (AttackBehaviour behaviour in attackBehaviours)
+            {
+                if (CurrentAttackBehaviour == null)
+                    CurrentAttackBehaviour = behaviour;
+                behaviour.targetMask = TargetMask;
+            }
+        }
+
+        private void CheckAttackBehaviour()
+        {
+            if ((CurrentAttackBehaviour == null) || !(CurrentAttackBehaviour.IsAvailable))
+            {
+                CurrentAttackBehaviour = null;
+
+                foreach (AttackBehaviour behaviour in attackBehaviours)
+                {
+                    if (behaviour.IsAvailable)
+                    {
+                        if ((CurrentAttackBehaviour == null) || (CurrentAttackBehaviour.priority < behaviour.priority))
+                            CurrentAttackBehaviour = behaviour;
+                    }
+                }
+            }
         }
 
         public override bool IsAvailableAttack
@@ -108,6 +147,24 @@ namespace RPG.Characters
         }
 
         #endregion IDamagable
+
+        #region IAttakable
+
+        public AttackBehaviour CurrentAttackBehaviour
+        {
+            get;
+            private set;
+        }
+
+        public void OnExcuteAttack(int attackIndex)
+        {
+            if (CurrentAttackBehaviour != null && Target != null)
+            {
+                CurrentAttackBehaviour.ExecuteAttack(Target.gameObject, projectilePoint);
+            }
+        }
+
+        #endregion IAttackable
     }
 
 }

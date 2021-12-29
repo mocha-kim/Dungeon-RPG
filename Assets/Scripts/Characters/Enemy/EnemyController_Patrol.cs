@@ -4,7 +4,7 @@ using RPG.AI;
 
 namespace RPG.Characters
 {
-    public class EnemyController_Patrol : EnemyController, IDamagable
+    public class EnemyController_Patrol : EnemyController, IDamagable, IAttackable
     {
         #region Variables
 
@@ -107,7 +107,24 @@ namespace RPG.Characters
             }
         }
 
+        public void OnExcuteAttack(int attackIndex)
+        {
+            throw new System.NotImplementedException();
+        }
+
         #endregion IDamagable
+
+        #region IAttakable
+
+        public AttackBehaviour CurrentAttackBehaviour
+        {
+            get;
+            private set;
+        }
+
+
+
+        #endregion IAttackable
     }
 
 }
