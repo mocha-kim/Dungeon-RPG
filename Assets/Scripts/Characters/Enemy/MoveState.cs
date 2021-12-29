@@ -13,7 +13,7 @@ namespace RPG.AI
         private CharacterController controller;
         private NavMeshAgent agent;
 
-        protected int hashMove = Animator.StringToHash("Move");
+        protected int hashIsMoving = Animator.StringToHash("IsMoving");
         protected int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
 
         public override void OnInitialized()
@@ -26,7 +26,7 @@ namespace RPG.AI
         public override void OnEnter()
         {
             agent?.SetDestination(context.Target.position);
-            animator?.SetBool(hashMove, true);
+            animator?.SetBool(hashIsMoving, true);
         }
 
         public override void Update(float deltaTime)
@@ -48,7 +48,7 @@ namespace RPG.AI
 
         public override void OnExit()
         {
-            animator?.SetBool(hashMove, false);
+            animator?.SetBool(hashIsMoving, false);
             agent.ResetPath();
         }
     }

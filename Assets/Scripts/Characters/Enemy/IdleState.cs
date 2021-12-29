@@ -16,7 +16,7 @@ namespace RPG.AI
         private Animator animator;
         private CharacterController controller;
 
-        protected int hashMove = Animator.StringToHash("Move");
+        protected int hashIsMoving = Animator.StringToHash("Move");
         protected int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
 
         public override void OnInitialized()
@@ -27,7 +27,7 @@ namespace RPG.AI
 
         public override void OnEnter()
         {
-            animator?.SetBool(hashMove, false);
+            animator?.SetBool(hashIsMoving, false);
             animator?.SetFloat(hashMoveSpeed, 0);
             controller?.Move(Vector3.zero);
 
