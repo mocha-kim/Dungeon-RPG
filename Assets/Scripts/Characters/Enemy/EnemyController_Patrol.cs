@@ -14,6 +14,12 @@ namespace RPG.Characters
 
         public Transform[] waypoints;
 
+        public float maxHealth = 100f;
+        private float health;
+
+        private int hashHit = Animator.StringToHash("Hit");
+        private int hashIsAlive = Animator.StringToHash("IsAlive");
+
         #endregion Variables
 
         protected override void Start()
@@ -72,14 +78,7 @@ namespace RPG.Characters
 
         #region IDamagable
 
-        public float maxHealth = 100f;
-
-        private float health;
-
         public bool IsAlive => (health > 0);
-
-        private int hitTriggerHash = Animator.StringToHash("Hit");
-        private int isAliveHash = Animator.StringToHash("IsAlive");
 
         public void TakeDamage(int damage, GameObject hitEffectPrefab)
         {
@@ -97,11 +96,11 @@ namespace RPG.Characters
 
             if (IsAlive)
             {
-                animator?.SetTrigger(hitTriggerHash);
+                animator?.SetTrigger(hashHit);
             }
             else
             {
-                animator?.SetBool(isAliveHash, false);
+                animator?.SetBool(hashIsAlive, false);
 
                 Destroy(gameObject, 3.0f);
             }
