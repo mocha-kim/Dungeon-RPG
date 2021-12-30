@@ -494,7 +494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5108345815720626510
 Transform:
   m_ObjectHideFlags: 0
@@ -3499,7 +3499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: {fileID: 5114515039881907174}
-  waypoints: []
+  attackPoint: {fileID: 0}
   attackBehaviours: []
   weaponCollider: {fileID: 420928650532411394}
   hitEffectPrefab: {fileID: 0}
