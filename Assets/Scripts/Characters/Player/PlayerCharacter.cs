@@ -46,6 +46,8 @@ namespace RPG.Characters
         public float maxHealth = 100f;
         public float health;
 
+        public float attackRange = 1.5f;
+
         public Collider weaponCollider;
 
         public AttackBehaviour CurrentAttackBehaviour
@@ -69,6 +71,7 @@ namespace RPG.Characters
             camera = Camera.main;
 
             health = maxHealth;
+            attackRange = CurrentAttackBehaviour?.range ?? 1.5f;
 
             if (battleUI)
             {
@@ -91,28 +94,10 @@ namespace RPG.Characters
             {
                 // Screen to world
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
-                {
-                    Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
-                    picker.gameObject.SetActive(true);
-                    RemoveTarget();
-
-                    // Move character
-                    agent.SetDestination(hit.point);
-
-                    if (picker)
-                        picker.SetPosition(hit);
-                }
-            }
-            // Get mouse right click
-            else if (Input.GetMouseButtonDown(1))
-            {
-                // Screen to world
-                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100))
+
+                if (Physics.Raycast(ray, out hit, 100, targetMask))
                 {
                     Debug.Log("Target set " + hit.collider.name + " " + hit.point);
                     picker.gameObject.SetActive(false);
@@ -126,6 +111,19 @@ namespace RPG.Characters
                             picker.target = hit.collider.transform;
                     }
                 }
+                else if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
+                {
+                    Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
+                    picker.gameObject.SetActive(true);
+                    RemoveTarget();
+
+                    // Move character
+                    agent.SetDestination(hit.point);
+
+                    if (picker)
+                        picker.SetPosition(hit);
+                }
+
             }
 
             if (target != null)
@@ -201,7 +199,9 @@ namespace RPG.Characters
         {
             target = newTarget;
 
-            agent.stoppingDistance = CurrentAttackBehaviour?.range ?? 0;
+            if (CurrentAttackBehaviour)
+                attackRange = CurrentAttackBehaviour.range;
+            agent.stoppingDistance = attackRange;
             agent.updatePosition = false;
             agent.SetDestination(newTarget.transform.position);
         }
