@@ -2262,13 +2262,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad2d5433362a4cccb30848e15bb6965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  picker: {fileID: 0}
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 512
   battleUI: {fileID: 5897542574266822326}
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   target: {fileID: 0}
   attackBehaviours: []
   hitPoint: {fileID: 4008039701890369518}
@@ -2292,7 +2293,7 @@ MonoBehaviour:
   viewAngle: 120
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   obstacleMask:
     serializedVersion: 2
     m_Bits: 128
@@ -2910,7 +2911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4c5bcfbc40a429a9ea7ba6c7d3d822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpSlider: {fileID: 8815373205611259997}
   damageTextPrefab: {fileID: 4047807229400971692, guid: 59edb393730ef41f7a5dcb970c0cdbbd, type: 3}
 --- !u!1 &6518510091846989069
 GameObject:

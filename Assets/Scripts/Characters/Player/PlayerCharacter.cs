@@ -10,6 +10,7 @@ namespace RPG.Characters
     public class PlayerCharacter : MonoBehaviour, IAttackable, IDamagable
     {
         #region Variables
+        public MovePoint picker;
 
         private CharacterController controller;
         [SerializeField]
@@ -94,10 +95,14 @@ namespace RPG.Characters
                 if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
                 {
                     Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
+                    picker.gameObject.SetActive(true);
                     RemoveTarget();
 
                     // Move character
                     agent.SetDestination(hit.point);
+
+                    if (picker)
+                        picker.SetPosition(hit);
                 }
             }
             // Get mouse right click
@@ -109,12 +114,16 @@ namespace RPG.Characters
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100))
                 {
-                    Debug.Log("We hit " + hit.collider.name + " " + hit.point);
+                    Debug.Log("Target set " + hit.collider.name + " " + hit.point);
+                    picker.gameObject.SetActive(false);
 
                     IDamagable damagable = hit.collider.GetComponent<IDamagable>();
                     if (damagable != null && damagable.IsAlive)
                     {
                         SetTarget(hit.collider.transform);
+
+                        if (picker)
+                            picker.target = hit.collider.transform;
                     }
                 }
             }
