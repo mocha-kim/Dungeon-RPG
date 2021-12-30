@@ -25,6 +25,7 @@ namespace RPG.AI
 
         public override void OnEnter()
         {
+            agent.stoppingDistance = context.AttackRange;
             agent?.SetDestination(context.Target.position);
             animator?.SetBool(hashIsMoving, true);
         }
@@ -56,9 +57,10 @@ namespace RPG.AI
 
         public override void OnExit()
         {
+            agent.stoppingDistance = 0.0f;
+            agent.ResetPath();
             animator.SetFloat(hashMoveSpeed, 0f);
             animator.SetBool(hashIsMoving, false);
-            agent.ResetPath();
         }
     }
 

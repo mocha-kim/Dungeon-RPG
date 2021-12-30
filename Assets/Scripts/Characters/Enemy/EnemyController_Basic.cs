@@ -9,22 +9,34 @@ namespace RPG.Characters
     {
         #region Variables
 
-        public Transform projectilePoint;
         [SerializeField]
-        private List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
-        public Collider weaponCollider;
         public Transform hitPoint;
-        public GameObject hitEffect = null;
-
         public Transform[] waypoints;
 
-        public float maxHealth = 100f;
-        private float health;
+        [SerializeField]
+        protected List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
 
-        private int hashHit = Animator.StringToHash("Hit");
-        private int hashIsAlive = Animator.StringToHash("IsAlive");
+        public Collider weaponCollider;
+        public GameObject hitEffectPrefab = null;
+
+        public float maxHealth = 100f;
+        protected float health;
+
+        protected int hashHit = Animator.StringToHash("Hit");
+        protected int hashIsAlive = Animator.StringToHash("IsAlive");
 
         #endregion Variables
+
+        public override bool IsAvailableAttack
+        {
+            get
+            {
+                if (!Target)
+                    return false;
+                float distance = Vector3.Distance(transform.position, Target.position);
+                return (distance <= AttackRange);
+            }
+        }
 
         protected override void Start()
         {
@@ -36,13 +48,16 @@ namespace RPG.Characters
             InitAttackBehaviour();
         }
 
-        protected override void Update()
+        protected void OnAnimatorMove()
         {
+            Vector3 position = transform.position;
+            position.y = agent.nextPosition.y;
 
-            base.Update();
+            animator.rootPosition = position;
+            agent.nextPosition = position;
         }
 
-        private void InitAttackBehaviour()
+        protected void InitAttackBehaviour()
         {
             foreach (AttackBehaviour behaviour in attackBehaviours)
             {
@@ -52,9 +67,9 @@ namespace RPG.Characters
             }
         }
 
-        private void CheckAttackBehaviour()
+        protected void CheckAttackBehavior()
         {
-            if ((CurrentAttackBehaviour == null) || !(CurrentAttackBehaviour.IsAvailable))
+            if (CurrentAttackBehaviour == null || !CurrentAttackBehaviour.IsAvailable)
             {
                 CurrentAttackBehaviour = null;
 
@@ -66,52 +81,6 @@ namespace RPG.Characters
                             CurrentAttackBehaviour = behaviour;
                     }
                 }
-            }
-        }
-
-        public override bool IsAvailableAttack
-        {
-            get
-            {
-                if (!Target)
-                {
-                    return false;
-                }
-
-                float distance = Vector3.Distance(transform.position, Target.position);
-                return (distance <= AttackRange);
-            }
-        }
-
-        public void EnableAttackCollider()
-        {
-            Debug.Log("Check Attack Event");
-            if (weaponCollider)
-                weaponCollider.enabled = true;
-
-            StartCoroutine("DisableAttackCollider");
-        }
-
-        IEnumerator DisableAttackCollider()
-        {
-            yield return new WaitForFixedUpdate();
-
-            if (weaponCollider)
-                weaponCollider.enabled = false;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other != weaponCollider)
-                return;
-
-            if (((1 << other.gameObject.layer) & TargetMask) != 0)
-            {
-                //It matched one
-                Debug.Log("Attack Trigger: " + other.name);
-                PlayerCharacter playerCharacter = other.gameObject.GetComponent<PlayerCharacter>();
-                playerCharacter?.TakeDamage(10, hitEffect);
-
             }
         }
 
@@ -137,9 +106,7 @@ namespace RPG.Characters
             }
             else
             {
-                animator?.SetBool(hashIsAlive, false);
-
-                Destroy(gameObject, 3.0f);
+                stateMachine.ChangeState<DeadState>();
             }
         }
 
@@ -156,9 +123,7 @@ namespace RPG.Characters
         public void OnExcuteAttack(int attackIndex)
         {
             if (CurrentAttackBehaviour != null && Target != null)
-            {
-                CurrentAttackBehaviour.ExecuteAttack(Target.gameObject, projectilePoint);
-            }
+                CurrentAttackBehaviour.ExecuteAttack(Target.gameObject);
         }
 
         #endregion IAttackable

@@ -34,11 +34,7 @@ namespace RPG.AI
             attackStateController.exitAttackStateHandler += OnExitAttackState;
 
             animator?.SetInteger(hashAttackIndex, attackable.CurrentAttackBehaviour.animationIndex);
-
-            if (context.IsAvailableAttack)
-            {
-                animator?.SetTrigger(hashAttack);
-            }
+            animator?.SetTrigger(hashAttack);
         }
 
         public override void Update(float deltaTime)
@@ -53,11 +49,12 @@ namespace RPG.AI
 
         public void OnEnterAttackState()
         {
-
+            Debug.Log("enter attack");
         }
 
         public void OnExitAttackState()
         {
+            Debug.Log("exit attack");
             stateMachine.ChangeState<IdleState>();
         }
     }

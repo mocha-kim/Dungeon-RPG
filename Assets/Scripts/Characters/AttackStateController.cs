@@ -31,23 +31,21 @@ public class AttackStateController : MonoBehaviour
     public void OnEnterOfAttackstate()
     {
         IsInAttackState = true;
-        EnterAttackState();
+        enterAttackStateHandler();
     }
 
     public void OnEndOfAttackState()
     {
         IsInAttackState = false;
-        ExitAttackState();
+        exitAttackStateHandler();
     }
 
     private void EnterAttackState()
     {
-
     }
 
     private void ExitAttackState()
     {
-
     }
 
     public void OnCheckAttackCollider(int attackIndex)

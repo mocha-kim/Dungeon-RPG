@@ -16,7 +16,7 @@ namespace RPG.AI
         private Animator animator;
         private CharacterController controller;
 
-        protected int hashIsMoving = Animator.StringToHash("Move");
+        protected int hashIsMoving = Animator.StringToHash("IsMoving");
         protected int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
 
         public override void OnInitialized()

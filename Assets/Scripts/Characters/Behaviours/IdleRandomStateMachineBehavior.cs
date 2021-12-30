@@ -10,7 +10,7 @@ namespace RPG.Characters
         #region Variables
 
         public int numberOfStates = 3;
-        public float minNormTime = 0f;
+        public float minNormTime = 2f;
         public float maxNormTime = 5f;
 
         public float randomNormTime;
