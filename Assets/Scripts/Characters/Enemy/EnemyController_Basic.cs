@@ -18,6 +18,9 @@ namespace RPG.Characters
         public Collider weaponCollider;
         public GameObject hitEffectPrefab = null;
 
+        [SerializeField]
+        protected NPCBattleUI battleUI;
+
         public float maxHealth = 100f;
         protected float health;
 
@@ -44,6 +47,16 @@ namespace RPG.Characters
             stateMachine.AddState(new MoveState());
             stateMachine.AddState(new AttackState());
             stateMachine.AddState(new DeadState());
+
+            health = maxHealth;
+
+            if (battleUI)
+            {
+                battleUI.MinValue = 0.0f;
+                battleUI.MaxValue = maxHealth;
+                battleUI.CurValue = health;
+            }
+
             InitAttackBehaviour();
         }
 
@@ -93,6 +106,12 @@ namespace RPG.Characters
                 return;
 
             health -= damage;
+
+            if (battleUI)
+            {
+                battleUI.CurValue = health;
+                battleUI.CreateDamageText(damage);
+            }
 
             if (hitEffectPrefab)
             {

@@ -22,7 +22,6 @@ namespace RPG.Characters
                 if (projectile)
                 {
                     projectile.owner = this.gameObject;
-                    Debug.Log("owner: " + this.gameObject);
                     projectile.target = target;
                     projectile.attackBehaviour = this;
                 }

@@ -16,7 +16,6 @@ namespace RPG.Characters
         public float randomNormTime;
 
         readonly int hashRandomIdle = Animator.StringToHash("RandomIdle");
-        int random;
 
         #endregion Variables
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -38,9 +37,7 @@ namespace RPG.Characters
             // Transition
             if (stateInfo.normalizedTime > randomNormTime && !animator.IsInTransition(0))
             {
-                random = Random.Range(0, numberOfStates);
-                Debug.Log("random: " + random);
-                animator.SetInteger(hashRandomIdle, random);
+                animator.SetInteger(hashRandomIdle, Random.Range(0, numberOfStates));
             }
         }
 

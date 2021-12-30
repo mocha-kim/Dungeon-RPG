@@ -49,12 +49,10 @@ namespace RPG.AI
 
         public void OnEnterAttackState()
         {
-            Debug.Log("enter attack");
         }
 
         public void OnExitAttackState()
         {
-            Debug.Log("exit attack");
             stateMachine.ChangeState<IdleState>();
         }
     }

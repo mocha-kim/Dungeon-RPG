@@ -42,8 +42,6 @@ public class Projectile : MonoBehaviour
         {
             Collider projectileCollider = GetComponent<Collider>();
             Collider[] ownerColliders = owner.GetComponentsInChildren<Collider>();
-            Debug.Log("owner: " + owner);
-
 
             foreach (Collider collider in ownerColliders)
                 Physics.IgnoreCollision(projectileCollider, collider);
@@ -103,7 +101,7 @@ public class Projectile : MonoBehaviour
         }
 
         speed = 0;
-        rigidbody.isKinematic = true; // collision calculation disadle
+        rigidbody.isKinematic = true; // collision calculation disable
 
         ContactPoint contact = collision.contacts[0];
         Quaternion contactRotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
@@ -134,6 +132,7 @@ public class Projectile : MonoBehaviour
             damagable.TakeDamage(attackBehaviour?.damage ?? 0, null);
         }
 
+        Debug.Log("bang");
         StartCoroutine(DestroyParticle(0.1f));
     }
 

@@ -14,6 +14,8 @@ namespace RPG.Characters
         private CharacterController controller;
         [SerializeField]
         private LayerMask groundLayerMask;
+        [SerializeField]
+        protected NPCBattleUI battleUI;
 
         private NavMeshAgent agent;
         private Animator animator;
@@ -41,7 +43,7 @@ namespace RPG.Characters
         public bool IsAlive => health > 0;
 
         public float maxHealth = 100f;
-        private float health;
+        public float health;
 
         public Collider weaponCollider;
 
@@ -58,14 +60,21 @@ namespace RPG.Characters
         {
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
-
             agent = GetComponent<NavMeshAgent>();
+
             agent.updatePosition = false;
             agent.updateRotation = true;
 
             camera = Camera.main;
 
             health = maxHealth;
+
+            if (battleUI)
+            {
+                battleUI.MinValue = 0.0f;
+                battleUI.MaxValue = maxHealth;
+                battleUI.CurValue = health;
+            }
 
             InitAttackBehaviour();
         }
@@ -246,6 +255,12 @@ namespace RPG.Characters
             }
 
             health -= damage;
+
+            if (battleUI)
+            {
+                battleUI.CurValue = health;
+                battleUI.CreateDamageText(damage);
+            }
 
             if (hitEffectPrefab)
             {
