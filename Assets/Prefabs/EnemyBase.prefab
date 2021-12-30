@@ -3368,7 +3368,7 @@ GameObject:
   - component: {fileID: 6691175866661229857}
   - component: {fileID: 7930749860886572278}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: EnemyBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3498,12 +3498,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d3ed128866b4086a607fc2073b2b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePoint: {fileID: 0}
+  hitPoint: {fileID: 5114515039881907174}
+  waypoints: []
   attackBehaviours: []
   weaponCollider: {fileID: 420928650532411394}
-  hitPoint: {fileID: 5114515039881907174}
-  hitEffect: {fileID: 0}
-  waypoints: []
+  hitEffectPrefab: {fileID: 0}
   maxHealth: 100
 --- !u!114 &7930749860886572278
 MonoBehaviour:

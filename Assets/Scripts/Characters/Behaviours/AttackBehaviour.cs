@@ -34,13 +34,13 @@ namespace RPG.Characters
         #endregion Variables
 
         // Start is called before the first frame update
-        void Start()
+        protected void Start()
         {
             calcCooltime = coolTime;
         }
 
         // Update is called once per frame
-        void Update()
+        protected void Update()
         {
             if (calcCooltime < coolTime)
             {

@@ -1948,8 +1948,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d3ed128866b4086a607fc2073b2b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: {fileID: 5114515039881907174}
-  waypoints: []
+  hitPoint: {fileID: 5114404120480621616}
+  attackPoint: {fileID: 5114515039881907174}
   attackBehaviours:
   - {fileID: 241387664870677911}
   weaponCollider: {fileID: 420928650532411394}
@@ -1985,7 +1985,7 @@ MonoBehaviour:
   damage: 10
   range: 2
   coolTime: 0
-  effectPrefab: {fileID: 8123500623578600021, guid: d7456e1f6e5242540b63b9042a2e3915, type: 3}
+  effectPrefab: {fileID: 1464152371616656, guid: 7913054b3bc58d54b9f71fe755fc131f, type: 3}
   targetMask:
     serializedVersion: 2
     m_Bits: 0

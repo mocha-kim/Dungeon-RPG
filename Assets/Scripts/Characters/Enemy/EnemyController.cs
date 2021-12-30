@@ -16,7 +16,7 @@ namespace RPG.Characters
         protected NavMeshAgent agent;
         protected Animator animator;
 
-        public virtual float AttackRange => 3.0f;
+        public virtual float AttackRange => GetComponent<AttackBehaviour>()?.range ?? 3.0f;
         public virtual bool IsAvailableAttack => false;
 
         #endregion Variables

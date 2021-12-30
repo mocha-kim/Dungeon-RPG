@@ -8,6 +8,7 @@ namespace RPG.Characters
     {
         #region Variables
 
+        public Transform[] waypoints;
 
         #endregion Variables
 

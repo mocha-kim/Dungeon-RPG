@@ -9,9 +9,8 @@ namespace RPG.Characters
     {
         #region Variables
 
-        [SerializeField]
         public Transform hitPoint;
-        public Transform[] waypoints;
+        public Transform attackPoint;
 
         [SerializeField]
         protected List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
@@ -123,7 +122,7 @@ namespace RPG.Characters
         public void OnExcuteAttack(int attackIndex)
         {
             if (CurrentAttackBehaviour != null && Target != null)
-                CurrentAttackBehaviour.ExecuteAttack(Target.gameObject);
+                CurrentAttackBehaviour.ExecuteAttack(Target.gameObject, attackPoint);
         }
 
         #endregion IAttackable
