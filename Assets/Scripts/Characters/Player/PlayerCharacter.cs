@@ -100,7 +100,7 @@ namespace RPG.Characters
                 if (Physics.Raycast(ray, out hit, 100, targetMask))
                 {
                     Debug.Log("Target set " + hit.collider.name + " " + hit.point);
-                    picker.gameObject.SetActive(false);
+                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
                     IDamagable damagable = hit.collider.GetComponent<IDamagable>();
                     if (damagable != null && damagable.IsAlive)
@@ -114,7 +114,7 @@ namespace RPG.Characters
                 else if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
                 {
                     Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
-                    picker.gameObject.SetActive(true);
+                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     RemoveTarget();
 
                     // Move character
