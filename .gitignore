@@ -59,8 +59,7 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Charged Asset
-[Aa]ssets/Polygon*/**
-Polygon*.meta
+[Aa]ssets/DownloadedAssets/*
 
 # MacOS
 .DS_Store
