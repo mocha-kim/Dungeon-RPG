@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ItemType : int
 {
-    Sward = 0,
+    Sword = 0,
     Shield = 1,
     Bag = 2,
     Totem = 3,
