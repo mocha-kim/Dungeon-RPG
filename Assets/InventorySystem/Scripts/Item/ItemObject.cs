@@ -8,7 +8,6 @@ public enum ItemType : int
     Shield = 1,
     Bag = 2,
     Totem = 3,
-    Mask = 4,
     Food,
     Default
 }

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Item_Bone
   m_EditorClassIdentifier: 
   type: 6
-  isStackable: 0
-  icon: {fileID: 0}
+  isStackable: 1
+  icon: {fileID: 21300000, guid: 41407543d3fbd874bbe1f81ed841bc10, type: 3}
   modelPrefab: {fileID: 2629530651200952606, guid: c81822ab531984b539c8aa9f0e401311, type: 3}
   data:
-    id: -1
+    id: 1
     name: 
     buffs: []
   boneNames: []

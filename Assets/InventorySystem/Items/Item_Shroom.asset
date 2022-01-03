@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a15b8c61857a24a12bf9240d7fea0e67, type: 3}
   m_Name: Item_Shroom
   m_EditorClassIdentifier: 
-  type: 0
+  type: 6
   isStackable: 0
-  icon: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  icon: {fileID: 21300000, guid: 2a4c9b75751e9854d86c26b22469c43b, type: 3}
+  modelPrefab: {fileID: 2156097680232196156, guid: 0b065de7827c946b9aeb82105a3a24ff, type: 3}
   data:
-    id: -1
+    id: 4
     name: 
     buffs: []
   boneNames: []
