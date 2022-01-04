@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 namespace RPG.Characters
 {
@@ -89,8 +90,10 @@ namespace RPG.Characters
             if (!IsAlive)
                 return;
 
+            bool isOnUI = EventSystem.current.IsPointerOverGameObject();
+
             // Get mouse left click
-            if (Input.GetMouseButtonDown(0) && !IsInAttackState)
+            if (!isOnUI && Input.GetMouseButtonDown(0) && !IsInAttackState)
             {
                 // Screen to world
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
