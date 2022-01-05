@@ -18,22 +18,22 @@ MonoBehaviour:
     slots:
     - allowedItems: 
       item:
-        id: -1
+        id: 0
         name: 
         buffs: []
-      amount: 0
+      amount: 1
     - allowedItems: 
       item:
-        id: -1
+        id: 2
         name: 
         buffs: []
-      amount: 0
+      amount: 1
     - allowedItems: 
       item:
-        id: -1
+        id: 3
         name: 
         buffs: []
-      amount: 0
+      amount: 1
     - allowedItems: 
       item:
         id: -1

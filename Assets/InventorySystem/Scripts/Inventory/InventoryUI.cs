@@ -107,10 +107,12 @@ public abstract class InventoryUI : MonoBehaviour
 
         if (MouseData.interfaceMouseHovered == null)
         {
+            Debug.Log("call remove");
             slots[go].RemoveItem();
         }
         else if (MouseData.slotMouseHovered != null)
         {
+            Debug.Log("call swap");
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseHovered.slots[MouseData.slotMouseHovered];
             inventoryObject.SwapItems(slots[go], mouseHoverSlotData);
         }

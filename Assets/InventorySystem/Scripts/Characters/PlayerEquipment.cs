@@ -9,7 +9,10 @@ public class PlayerEquipment : MonoBehaviour
     public InventoryObject equipment;
     private EquipmentCombiner combiner;
     private ItemInstances[] itemInstances = new ItemInstances[4];
+
     public ItemObject[] defaultItemObjects = new ItemObject[4];
+
+    private bool isNewbie = true;
 
     private void Awake()
     {
@@ -27,18 +30,26 @@ public class PlayerEquipment : MonoBehaviour
     {
         foreach (InventorySlot slot in equipment.Slots)
         {
+            if (isNewbie)
+            {
+                if (slot.item == null)
+                    slot.AddItem(defaultItemObjects[(int)slot.allowedItems[0]].data, 1);
+                return;
+            }
+            isNewbie = false;
             OnEquipItem(slot);
         }
+
     }
 
     private void OnEquipItem(InventorySlot slot)
     {
         ItemObject itemObject = slot.ItemObject;
-        if (itemObject == null)
-        {
-            EquipDefaultItemBy(slot.allowedItems[0]);
-            return;
-        }
+        //if (itemObject == null)
+        //{
+        //    EquipDefaultItemBy(slot.allowedItems[0]);
+        //    return;
+        //}
 
         int index = (int)slot.allowedItems[0];
         switch(slot.allowedItems[0])
@@ -75,6 +86,7 @@ public class PlayerEquipment : MonoBehaviour
         if (itemObject == null)
             return null;
 
+        Debug.Log("equip mesh: " + itemObject.data.name);
         Transform[] itemTransforms = combiner.AddMesh(itemObject.modelPrefab);
         if (itemTransforms.Length > 0)
         {
