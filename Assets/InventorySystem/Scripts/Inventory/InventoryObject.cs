@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ public class InventoryObject : ScriptableObject
     [SerializeField]
     private Inventory container = new();
     public InventorySlot[] Slots => container.slots;
+
+    public Action<ItemObject> OnUseItem;
 
     public int EmptySlotCount
     {
@@ -77,5 +80,16 @@ public class InventoryObject : ScriptableObject
             itemSlotB.UpdateSlot(itemSlotA.item, itemSlotA.amount);
             itemSlotA.UpdateSlot(tempSlot.item, tempSlot.amount);
         }
+    }
+
+    public void UseItem(InventorySlot slot)
+    {
+        if (slot.ItemObject == null || slot.item.id < 0 || slot.amount <= 0)
+            return;
+
+        ItemObject itemObject = slot.ItemObject;
+        slot.UpdateSlot(slot.item, slot.amount - 1);
+
+        OnUseItem.Invoke(itemObject);
     }
 }

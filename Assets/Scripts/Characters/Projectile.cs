@@ -131,8 +131,6 @@ public class Projectile : MonoBehaviour
         {
             damagable.TakeDamage(attackBehaviour?.damage ?? 0, null);
         }
-
-        Debug.Log("bang");
         StartCoroutine(DestroyParticle(0.1f));
     }
 

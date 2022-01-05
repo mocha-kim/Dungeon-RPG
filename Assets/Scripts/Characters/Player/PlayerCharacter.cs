@@ -21,6 +21,7 @@ namespace RPG.Characters
 
         private NavMeshAgent agent;
         private Animator animator;
+
         private new Camera camera;
 
         readonly int hashIsMoving = Animator.StringToHash("IsMoving");
@@ -35,33 +36,41 @@ namespace RPG.Characters
         private LayerMask targetMask;
         public Transform target;
 
-        public bool IsInAttackState => GetComponent<AttackStateController>()?.IsInAttackState ?? false;
         [SerializeField]
         private List<AttackBehaviour> attackBehaviours = new List<AttackBehaviour>();
 
         [SerializeField]
         private Transform hitPoint;
 
-        public bool IsAlive => health > 0;
-
         public float maxHealth = 100f;
         public float health;
 
         public float attackRange = 1.5f;
-
         public Collider weaponCollider;
 
+        public InventoryObject inventory;
+
+        #endregion Variables
+
+        #region Properties
+
+        public bool IsAlive => health > 0;
+        public bool IsInAttackState => GetComponent<AttackStateController>()?.IsInAttackState ?? false;
         public AttackBehaviour CurrentAttackBehaviour
         {
             get;
             private set;
         }
 
-        #endregion Variables
+        #endregion Properties
+
+        #region Main Methods
 
         // Start is called before the first frame update
         void Start()
         {
+            inventory.OnUseItem += OnUseItem;
+
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
@@ -103,26 +112,28 @@ namespace RPG.Characters
                 if (Physics.Raycast(ray, out hit, 100, targetMask))
                 {
                     Debug.Log("Target set " + hit.collider.name + " " + hit.point);
+
                     picker.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    if (picker)
+                        picker.target = hit.collider.transform;
 
                     IDamagable damagable = hit.collider.GetComponent<IDamagable>();
                     if (damagable != null && damagable.IsAlive)
-                    {
-                        SetTarget(hit.collider.transform);
+                        SetTarget(hit.collider.transform, CurrentAttackBehaviour?.range ?? 0);
 
-                        if (picker)
-                            picker.target = hit.collider.transform;
-                    }
+                    IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                    if (interactable != null)
+                        SetTarget(hit.collider.transform, interactable.Distance);
                 }
                 else if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
                 {
                     Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
-                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     RemoveTarget();
 
                     // Move character
                     agent.SetDestination(hit.point);
 
+                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     if (picker)
                         picker.SetPosition(hit);
                 }
@@ -155,6 +166,20 @@ namespace RPG.Characters
                     animator.SetBool(hashIsMoving, false);
                     agent.ResetPath();
                 }
+
+                if (target != null)
+                {
+                    if (target.GetComponent<IInteractable>() != null)
+                    {
+                        IInteractable interactable = target.GetComponent<IInteractable>();
+                        if (interactable.Interact(this.gameObject))
+                            RemoveTarget();
+                    }
+                    else if (target.GetComponent<IDamagable>() != null)
+                    {
+                        AttackTarget();
+                    }
+                }
             }
 
             AttackTarget();
@@ -174,6 +199,10 @@ namespace RPG.Characters
             animator.rootPosition = position;
             agent.nextPosition = position;
         }
+
+#endregion Main Methods
+
+        #region Helper Methods
 
         private void InitAttackBehaviour()
         {
@@ -198,15 +227,16 @@ namespace RPG.Characters
             }
         }
 
-        private void SetTarget(Transform newTarget)
+        private void SetTarget(Transform newTarget, float stoppingDistance)
         {
             target = newTarget;
 
-            if (CurrentAttackBehaviour)
-                attackRange = CurrentAttackBehaviour.range;
-            agent.stoppingDistance = attackRange;
+            agent.stoppingDistance = stoppingDistance;
             agent.updatePosition = false;
             agent.SetDestination(newTarget.transform.position);
+
+            if (picker)
+                picker.target = newTarget.transform;
         }
 
         void RemoveTarget()
@@ -246,6 +276,8 @@ namespace RPG.Characters
             }
         }
 
+        #endregion Helper Methods
+
         #region IAttackable
 
         public void OnExcuteAttack(int attackIndex)
@@ -255,7 +287,6 @@ namespace RPG.Characters
         }
 
         #endregion IAttackable
-
 
         #region IDamagable
 
@@ -290,6 +321,39 @@ namespace RPG.Characters
         }
 
         #endregion IDamagable
+
+        #region Inventory
+
+        private void OnUseItem(ItemObject itemObject)
+        {
+            foreach (ItemBuff buff in itemObject.data.buffs)
+            {
+                if (buff.status == CharacterAttribute.HP)
+                    this.health += buff.value;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            var item = other.GetComponent<GroundItem>();
+            if (item)
+            {
+                if (inventory.AddItem(new Item(item.itemObject), 1))
+                    Destroy(other.gameObject);
+            }
+        }
+
+        public bool PickupItem(PickupItem item, int amount = 1)
+        {
+            if (item.itemObject != null && inventory.AddItem(new Item(item.itemObject), amount))
+            {
+                Destroy(item.gameObject);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion Inventory
     }
 
 }

@@ -32,6 +32,7 @@ public class DynamicInventory : InventoryUI
             AddEvent(uiGo, EventTriggerType.BeginDrag, delegate { OnStartDrag(uiGo); });
             AddEvent(uiGo, EventTriggerType.Drag, delegate { OnDrag(uiGo); });
             AddEvent(uiGo, EventTriggerType.EndDrag, delegate { OnEndDrag(uiGo); });
+            AddEvent(uiGo, EventTriggerType.PointerClick, (data) => { OnClick(uiGo, (PointerEventData)data); });
 
             inventoryObject.Slots[i].slotUI = uiGo;
             slots.Add(uiGo, inventoryObject.Slots[i]);
@@ -46,5 +47,15 @@ public class DynamicInventory : InventoryUI
         float y = start.y + (-(space.y + size.y) * (i / numberOfColumn));
 
         return new Vector3(x, y, 0f);
+    }
+
+    protected override void OnLeftClick(InventorySlot slot)
+    {
+
+    }
+
+    protected override void OnRightClick(InventorySlot slot)
+    {
+        inventoryObject.UseItem(slot);
     }
 }

@@ -86,7 +86,6 @@ public class PlayerEquipment : MonoBehaviour
         if (itemObject == null)
             return null;
 
-        Debug.Log("equip mesh: " + itemObject.data.name);
         Transform[] itemTransforms = combiner.AddMesh(itemObject.modelPrefab);
         if (itemTransforms.Length > 0)
         {

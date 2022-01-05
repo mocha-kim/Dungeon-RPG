@@ -1691,6 +1691,7 @@ MonoBehaviour:
   health: 0
   attackRange: 1.5
   weaponCollider: {fileID: 0}
+  inventory: {fileID: 11400000, guid: e86f451fba2e0408f921c8b85da2cc11, type: 2}
 --- !u!114 &1316340324480884435
 MonoBehaviour:
   m_ObjectHideFlags: 0
