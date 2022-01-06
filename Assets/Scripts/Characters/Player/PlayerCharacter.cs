@@ -27,6 +27,7 @@ namespace RPG.Characters
         readonly int hashIsMoving = Animator.StringToHash("IsMoving");
         readonly int hashMoveSpeed = Animator.StringToHash("MoveSpeed");
         readonly int hashAttack = Animator.StringToHash("Attack");
+        readonly int hashIsInBattle = Animator.StringToHash("IsInBattle");
         readonly int hashAttackIndex = Animator.StringToHash("AttackIndex");
         readonly int hashIsAlive = Animator.StringToHash("IsAlive");
         readonly int hashHit = Animator.StringToHash("Hit");
@@ -44,6 +45,8 @@ namespace RPG.Characters
 
         public float maxHealth = 100f;
         public float health;
+
+        private float battleTime;
 
         public float attackRange = 1.5f;
         public Collider weaponCollider;
@@ -90,6 +93,7 @@ namespace RPG.Characters
                 battleUI.CurValue = health;
             }
 
+            battleTime = 0;
             InitAttackBehaviour();
         }
 
@@ -99,6 +103,12 @@ namespace RPG.Characters
             if (!IsAlive)
                 return;
 
+            if (animator.GetBool(hashIsInBattle))
+            {
+                if (battleTime > 2.0f)
+                    animator.SetBool(hashIsInBattle, false);
+                battleTime += Time.deltaTime;
+            }
             CheckAttackBehaviour();
 
             bool isOnUI = EventSystem.current.IsPointerOverGameObject();
@@ -122,7 +132,6 @@ namespace RPG.Characters
                     if (picker)
                         picker.SetPosition(hit);
                 }
-                Debug.Log("left click, stopping distance = " + agent.stoppingDistance);
             }
             else if (!isOnUI && Input.GetMouseButtonDown(1))
             {
@@ -146,7 +155,6 @@ namespace RPG.Characters
                     if (interactable != null)
                         SetTarget(hit.collider.transform, interactable.Distance);
                 }
-                Debug.Log("right click, stopping distance = " + agent.stoppingDistance);
             }
 
             if (target != null)
@@ -233,7 +241,6 @@ namespace RPG.Characters
         private void SetTarget(Transform newTarget, float stoppingDistance)
         {
             target = newTarget;
-            Debug.Log("set Target: " + target);
 
             agent.stoppingDistance = stoppingDistance;
             agent.updatePosition = false;
@@ -264,6 +271,7 @@ namespace RPG.Characters
                 {
                     animator.SetInteger(hashAttackIndex, CurrentAttackBehaviour.animationIndex);
                     animator.SetTrigger(hashAttack);
+                    animator.SetBool(hashIsInBattle, true);
                 }
             }
         }
@@ -315,6 +323,7 @@ namespace RPG.Characters
             if (IsAlive)
             {
                 animator?.SetTrigger(hashHit);
+                animator?.SetBool(hashIsInBattle, true);
             }
             else
             {
