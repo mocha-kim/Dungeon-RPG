@@ -21,7 +21,7 @@ namespace RPG.Characters
                 Projectile projectile = projectileGO.GetComponent<Projectile>();
                 if (projectile)
                 {
-                    projectile.owner = this.gameObject;
+                    projectile.owner = gameObject;
                     projectile.target = target;
                     projectile.attackBehaviour = this;
                 }

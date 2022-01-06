@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2773640463935950927}
   - component: {fileID: 2644284591000976223}
   - component: {fileID: 2645501048491305799}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EmberTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4906,7 +4906,7 @@ GameObject:
   - component: {fileID: 6121435275019899861}
   - component: {fileID: 3521514346398154314}
   - component: {fileID: 6282659139862087382}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Projectile_skull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9865,7 +9865,7 @@ GameObject:
   - component: {fileID: 4613034312462804365}
   - component: {fileID: 6793660269558741961}
   - component: {fileID: 258895463678960360}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GlowTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

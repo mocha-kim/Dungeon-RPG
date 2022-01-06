@@ -99,6 +99,8 @@ namespace RPG.Characters
             if (!IsAlive)
                 return;
 
+            CheckAttackBehaviour();
+
             bool isOnUI = EventSystem.current.IsPointerOverGameObject();
 
             // Get mouse left click
@@ -108,7 +110,26 @@ namespace RPG.Characters
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
                 RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
+                {
+                    Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
+                    RemoveTarget();
 
+                    // Move character
+                    agent.SetDestination(hit.point);
+
+                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    if (picker)
+                        picker.SetPosition(hit);
+                }
+                Debug.Log("left click, stopping distance = " + agent.stoppingDistance);
+            }
+            else if (!isOnUI && Input.GetMouseButtonDown(1))
+            {
+                // Screen to world
+                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
+                RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100, targetMask))
                 {
                     Debug.Log("Target set " + hit.collider.name + " " + hit.point);
@@ -125,19 +146,7 @@ namespace RPG.Characters
                     if (interactable != null)
                         SetTarget(hit.collider.transform, interactable.Distance);
                 }
-                else if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
-                {
-                    Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
-                    RemoveTarget();
-
-                    // Move character
-                    agent.SetDestination(hit.point);
-
-                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                    if (picker)
-                        picker.SetPosition(hit);
-                }
-
+                Debug.Log("right click, stopping distance = " + agent.stoppingDistance);
             }
 
             if (target != null)
@@ -185,12 +194,6 @@ namespace RPG.Characters
             AttackTarget();
         }
 
-        private void LateUpdate()
-        {
-            animator.rootPosition = agent.nextPosition;
-            transform.position = agent.nextPosition;
-        }
-
         protected void OnAnimatorMove()
         {
             Vector3 position = transform.position;
@@ -230,6 +233,7 @@ namespace RPG.Characters
         private void SetTarget(Transform newTarget, float stoppingDistance)
         {
             target = newTarget;
+            Debug.Log("set Target: " + target);
 
             agent.stoppingDistance = stoppingDistance;
             agent.updatePosition = false;
@@ -251,9 +255,7 @@ namespace RPG.Characters
         void AttackTarget()
         {
             if (CurrentAttackBehaviour == null)
-            {
                 return;
-            }
 
             if (target != null && !IsInAttackState && CurrentAttackBehaviour.IsAvailable)
             {
@@ -329,7 +331,7 @@ namespace RPG.Characters
             foreach (ItemBuff buff in itemObject.data.buffs)
             {
                 if (buff.status == CharacterAttribute.HP)
-                    this.health += buff.value;
+                    health += buff.value;
             }
         }
 

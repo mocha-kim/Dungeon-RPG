@@ -1577,6 +1577,7 @@ GameObject:
   - component: {fileID: 4008039702396868537}
   - component: {fileID: 1316340324480884435}
   - component: {fileID: 913435344337700218}
+  - component: {fileID: 3231180632309873429}
   - component: {fileID: 7147712662803282089}
   m_Layer: 3
   m_Name: PlayerCharacter
@@ -1676,7 +1677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad2d5433362a4cccb30848e15bb6965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  picker: {fileID: 0}
+  picker: {fileID: 8093306511880633321, guid: 38e3a16c40df5440d96677db69ba288a, type: 3}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 512
@@ -1685,7 +1686,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 320
   target: {fileID: 0}
-  attackBehaviours: []
+  attackBehaviours:
+  - {fileID: 3231180632309873429}
   hitPoint: {fileID: 4008039701890369518}
   maxHealth: 100
   health: 0
@@ -1725,6 +1727,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9609e71a16b2477995d746d8fbe662e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3231180632309873429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4008039701890183394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6cbf614a77c54751b67e2255cc5c991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  devDescroption: 
+  animationIndex: 0
+  priority: 0
+  damage: 10
+  range: 2
+  coolTime: 0
+  effectPrefab: {fileID: 8792079695798041162, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  attackCollision: {fileID: 4108468098028734817}
 --- !u!114 &7147712662803282089
 MonoBehaviour:
   m_ObjectHideFlags: 0

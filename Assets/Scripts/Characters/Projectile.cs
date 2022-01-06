@@ -43,8 +43,10 @@ public class Projectile : MonoBehaviour
             Collider projectileCollider = GetComponent<Collider>();
             Collider[] ownerColliders = owner.GetComponentsInChildren<Collider>();
 
-            foreach (Collider collider in ownerColliders)
-                Physics.IgnoreCollision(projectileCollider, collider);
+            //foreach (Collider collider in ownerColliders)
+            //    Physics.IgnoreCollision(projectileCollider, collider);
+
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
         }
 
         rigidbody = GetComponent<Rigidbody>();

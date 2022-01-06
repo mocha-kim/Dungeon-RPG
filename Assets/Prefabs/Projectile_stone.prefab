@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3794370797629098807}
   - component: {fileID: 7176596445326921676}
   - component: {fileID: 8826754210211989765}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Projectile_stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4983,7 +4983,7 @@ GameObject:
   - component: {fileID: 978792614058941712}
   - component: {fileID: 1106424461355775488}
   - component: {fileID: 1107349856226141720}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SparkTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9865,7 +9865,7 @@ GameObject:
   - component: {fileID: 976118074366690820}
   - component: {fileID: 1106563835266739900}
   - component: {fileID: 1107407685083823166}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SolidTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14756,7 +14756,7 @@ GameObject:
   - component: {fileID: 6616858819911179554}
   - component: {fileID: 6414073440270972314}
   - component: {fileID: 6414917324162541336}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
