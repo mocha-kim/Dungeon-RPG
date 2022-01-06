@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInstances : MonoBehaviour
+namespace RPG.InventorySystem.Item
 {
-    public List<Transform> items = new();
 
-    private void OnDestroy()
+    public class ItemInstances : MonoBehaviour
     {
-        foreach (Transform item in items)
+        public List<Transform> items = new();
+
+        private void OnDestroy()
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in items)
+            {
+                Destroy(item.gameObject);
+            }
         }
     }
+
 }

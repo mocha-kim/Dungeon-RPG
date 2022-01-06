@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item Database", menuName = "Inventory System/Items/Database")]
-public class ItemObjectDatabase : ScriptableObject
+namespace RPG.InventorySystem.Item
 {
-    public ItemObject[] itemObjects;
 
-    public void OnValidate()
+    [CreateAssetMenu(fileName = "New Item Database", menuName = "Inventory System/Items/Database")]
+    public class ItemObjectDatabase : ScriptableObject
     {
-        for (int i = 0; i < itemObjects.Length; ++i)
+        public ItemObject[] itemObjects;
+
+        public void OnValidate()
         {
-            itemObjects[i].data.id = i;
+            for (int i = 0; i < itemObjects.Length; ++i)
+            {
+                itemObjects[i].data.id = i;
+            }
         }
     }
+
 }

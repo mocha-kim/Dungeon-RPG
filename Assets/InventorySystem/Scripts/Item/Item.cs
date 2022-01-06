@@ -3,32 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class Item
+namespace RPG.InventorySystem.Item
 {
-    public int id;
-    public string name;
 
-    public ItemBuff[] buffs;
-
-    public Item()
+    [Serializable]
+    public class Item
     {
-        id = -1;
-        name = "";
-    }
+        public int id;
+        public string name;
 
-    public Item(ItemObject otherItem)
-    {
-        name = otherItem.name;
-        id = otherItem.data.id;
+        public ItemBuff[] buffs;
 
-        buffs = new ItemBuff[otherItem.data.buffs.Length];
-        for (int i = 0; i < buffs.Length; ++i)
+        public Item()
         {
-            buffs[i] = new ItemBuff(otherItem.data.buffs[i].Min, otherItem.data.buffs[i].Max)
+            id = -1;
+            name = "";
+        }
+
+        public Item(ItemObject otherItem)
+        {
+            name = otherItem.name;
+            id = otherItem.data.id;
+
+            buffs = new ItemBuff[otherItem.data.buffs.Length];
+            for (int i = 0; i < buffs.Length; ++i)
             {
-                status = otherItem.data.buffs[i].status
-            };
+                buffs[i] = new ItemBuff(otherItem.data.buffs[i].Min, otherItem.data.buffs[i].Max)
+                {
+                    status = otherItem.data.buffs[i].status
+                };
+            }
         }
     }
+
 }

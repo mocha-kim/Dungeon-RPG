@@ -4,44 +4,49 @@ using System.Collections.Generic;
 using RPG.Core;
 using UnityEngine;
 
-public enum CharacterAttribute
+namespace RPG.InventorySystem.Item
 {
-    HP,
-    Stamina,
-    Strength
-}
 
-[Serializable]
-public class ItemBuff : IModifier
-{
-    public CharacterAttribute status;
-    public int value;
-
-    [SerializeField]
-    private int min;
-    public int Min => min;
-
-    [SerializeField]
-    private int max;
-    public int Max => max;
-
-    public ItemBuff(int min, int max)
+    public enum CharacterAttribute
     {
-        this.min = min;
-        this.max = max;
-
-        GenerateValue();
+        HP,
+        Stamina,
+        Strength
     }
 
-    public void GenerateValue()
+    [Serializable]
+    public class ItemBuff : IModifier
     {
-        value = UnityEngine.Random.Range(min, max);
+        public CharacterAttribute status;
+        public int value;
+
+        [SerializeField]
+        private int min;
+        public int Min => min;
+
+        [SerializeField]
+        private int max;
+        public int Max => max;
+
+        public ItemBuff(int min, int max)
+        {
+            this.min = min;
+            this.max = max;
+
+            GenerateValue();
+        }
+
+        public void GenerateValue()
+        {
+            value = UnityEngine.Random.Range(min, max);
+        }
+
+        #region IModifier interface
+        public void AddValue(ref int v)
+        {
+            v += value;
+        }
+        #endregion IModifier interface
     }
 
-    #region IModifier interface
-    public void AddValue(ref int v)
-    {
-        v += value;
-    }
-    #endregion IModifier interface
 }
