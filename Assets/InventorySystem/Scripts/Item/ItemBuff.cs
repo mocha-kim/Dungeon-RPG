@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using RPG.Core;
 using UnityEngine;
 
-namespace RPG.InventorySystem.Item
+namespace RPG.InventorySystem.Items
 {
 
     public enum CharacterAttribute

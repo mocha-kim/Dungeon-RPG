@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using RPG.Characters;
 using UnityEngine;
 
-namespace RPG.InventorySystem.Item
+namespace RPG.InventorySystem.Items
 {
 
     public class PickupItem : MonoBehaviour, IInteractable

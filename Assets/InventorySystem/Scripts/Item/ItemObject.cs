@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RPG.InventorySystem.Item
+namespace RPG.InventorySystem.Items
 {
 
     public enum ItemType : int

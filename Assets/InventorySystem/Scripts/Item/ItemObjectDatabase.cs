@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RPG.InventorySystem.Item
+namespace RPG.InventorySystem.Items
 {
 
     [CreateAssetMenu(fileName = "New Item Database", menuName = "Inventory System/Items/Database")]

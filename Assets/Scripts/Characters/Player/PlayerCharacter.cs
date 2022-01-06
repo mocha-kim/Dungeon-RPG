@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPG.InventorySystem.Inventory;
+using RPG.InventorySystem.Items;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;

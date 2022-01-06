@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPG.InventorySystem.Items;
 using UnityEngine;
 
 namespace RPG.InventorySystem.Inventory
@@ -33,6 +34,7 @@ namespace RPG.InventorySystem.Inventory
         }
 
         public InventorySlot() => UpdateSlot(new Item(), 0);
+
         public InventorySlot(Item item, int amount) => UpdateSlot(item, amount);
 
         public void AddItem(Item item, int amount) => UpdateSlot(item, amount);

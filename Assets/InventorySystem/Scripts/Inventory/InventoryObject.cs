@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RPG.InventorySystem.Items;
 using UnityEngine;
 
 namespace RPG.InventorySystem.Inventory
