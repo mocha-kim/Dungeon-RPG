@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPG.Core;
 using UnityEngine;
 
 public enum CharacterAttribute
@@ -11,7 +12,7 @@ public enum CharacterAttribute
 }
 
 [Serializable]
-public class ItemBuff
+public class ItemBuff : IModifier
 {
     public CharacterAttribute status;
     public int value;
@@ -37,8 +38,10 @@ public class ItemBuff
         value = UnityEngine.Random.Range(min, max);
     }
 
+    #region IModifier interface
     public void AddValue(ref int v)
     {
         v += value;
     }
+    #endregion IModifier interface
 }
