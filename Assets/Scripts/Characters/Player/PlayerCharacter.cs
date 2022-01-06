@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPG.StatsSystem;
 using RPG.InventorySystem.Inventory;
 using RPG.InventorySystem.Items;
 using UnityEngine;
@@ -341,7 +342,7 @@ namespace RPG.Characters
         {
             foreach (ItemBuff buff in itemObject.data.buffs)
             {
-                if (buff.status == CharacterAttribute.HP)
+                if (buff.status == CharacterAttribute.Health)
                     health += buff.value;
             }
         }

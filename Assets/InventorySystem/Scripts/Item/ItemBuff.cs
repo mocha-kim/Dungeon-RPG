@@ -1,18 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RPG.StatsSystem;
 using RPG.Core;
 using UnityEngine;
 
 namespace RPG.InventorySystem.Items
 {
-
-    public enum CharacterAttribute
-    {
-        HP,
-        Stamina,
-        Strength
-    }
 
     [Serializable]
     public class ItemBuff : IModifier
