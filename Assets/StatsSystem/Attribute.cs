@@ -5,15 +5,6 @@ using UnityEngine;
 
 namespace RPG.StatsSystem
 {
-
-    public enum CharacterAttribute
-    {
-        Health,
-        Mana,
-        Stamina,
-        Strength
-    }
-
     public enum AttributeType
     {
         Health,

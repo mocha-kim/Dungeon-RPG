@@ -347,9 +347,9 @@ namespace RPG.Characters
         {
             foreach (ItemBuff buff in itemObject.data.buffs)
             {
-                if (buff.status == CharacterAttribute.Health)
+                if (buff.status == AttributeType.Health)
                     playerStats.AddHealth(buff.value);
-                if (buff.status == CharacterAttribute.Mana)
+                if (buff.status == AttributeType.Mana)
                     playerStats.AddMana(buff.value);
             }
         }

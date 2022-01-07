@@ -11,7 +11,7 @@ namespace RPG.InventorySystem.Items
     [Serializable]
     public class ItemBuff : IModifier
     {
-        public CharacterAttribute status;
+        public AttributeType status;
         public int value;
 
         [SerializeField]

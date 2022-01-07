@@ -95,7 +95,7 @@ namespace RPG.StatsSystem
             OnChangedStats?.Invoke(this);
         }
 
-        private int GetModifiedValue(AttributeType type)
+        public int GetModifiedValue(AttributeType type)
         {
             foreach (Attribute attribute in attributes)
             {
@@ -106,7 +106,7 @@ namespace RPG.StatsSystem
             return -1;
         }
 
-        private void SetBaseValue(AttributeType type, int value)
+        public void SetBaseValue(AttributeType type, int value)
         {
             foreach (Attribute attribute in attributes)
             {
