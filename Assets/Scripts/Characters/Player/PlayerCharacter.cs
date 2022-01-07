@@ -19,8 +19,6 @@ namespace RPG.Characters
         private CharacterController controller;
         [SerializeField]
         private LayerMask groundLayerMask;
-        [SerializeField]
-        protected NPCBattleUI battleUI;
 
         private NavMeshAgent agent;
         private Animator animator;
@@ -46,21 +44,20 @@ namespace RPG.Characters
         [SerializeField]
         private Transform hitPoint;
 
-        public float maxHealth = 100f;
-        public float health;
-
         private float battleTime;
 
-        public float attackRange = 1.5f;
         public Collider weaponCollider;
 
         public InventoryObject inventory;
+
+        [SerializeField]
+        private StatsObject playerStats;
 
         #endregion Variables
 
         #region Properties
 
-        public bool IsAlive => health > 0;
+        public bool IsAlive => playerStats.Health > 0;
         public bool IsInAttackState => GetComponent<AttackStateController>()?.IsInAttackState ?? false;
         public AttackBehaviour CurrentAttackBehaviour
         {
@@ -79,24 +76,14 @@ namespace RPG.Characters
 
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
-            agent = GetComponent<NavMeshAgent>();
 
+            agent = GetComponent<NavMeshAgent>();
             agent.updatePosition = false;
             agent.updateRotation = true;
 
             camera = Camera.main;
 
-            health = maxHealth;
-            attackRange = CurrentAttackBehaviour?.range ?? 1.5f;
-
-            if (battleUI)
-            {
-                battleUI.MinValue = 0.0f;
-                battleUI.MaxValue = maxHealth;
-                battleUI.CurValue = health;
-            }
-
-            battleTime = 0;
+            battleTime = 0f;
             InitAttackBehaviour();
         }
 
@@ -109,7 +96,10 @@ namespace RPG.Characters
             if (animator.GetBool(hashIsInBattle))
             {
                 if (battleTime > 2.0f)
+                {
+                    battleTime = 0f;
                     animator.SetBool(hashIsInBattle, false);
+                }
                 battleTime += Time.deltaTime;
             }
             CheckAttackBehaviour();
@@ -131,9 +121,11 @@ namespace RPG.Characters
                     // Move character
                     agent.SetDestination(hit.point);
 
-                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     if (picker)
+                    {
+                        picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                         picker.SetPosition(hit);
+                    }
                 }
             }
             else if (!isOnUI && Input.GetMouseButtonDown(1))
@@ -146,9 +138,11 @@ namespace RPG.Characters
                 {
                     Debug.Log("Target set " + hit.collider.name + " " + hit.point);
 
-                    picker.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     if (picker)
-                        picker.target = hit.collider.transform;
+                    {
+                        picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                        picker.SetPosition(hit);
+                    }
 
                     IDamagable damagable = hit.collider.GetComponent<IDamagable>();
                     if (damagable != null && damagable.IsAlive)
@@ -163,15 +157,20 @@ namespace RPG.Characters
             if (target != null)
             {
                 if (!(target.GetComponent<IDamagable>()?.IsAlive ?? false))
+                {
                     RemoveTarget();
+                }
                 else
                 {
-                    agent.SetDestination(target.position);
+                    float distance = Vector3.Distance(target.position, transform.position);
+                    float range = CurrentAttackBehaviour?.range ?? 1.5f;
+                    if (distance > range)
+                        SetTarget(target, range);
                     FaceToTarget();
                 }
             }
 
-            if (agent.remainingDistance > agent.stoppingDistance)
+            if (agent.pathPending || (agent.remainingDistance > agent.stoppingDistance))
             {
                 controller.Move(agent.velocity * Time.deltaTime);
                 animator.SetFloat(hashMoveSpeed, agent.velocity.magnitude / agent.speed, .1f, Time.deltaTime);
@@ -180,12 +179,10 @@ namespace RPG.Characters
             else
             {
                 controller.Move(Vector3.zero);
-                if (!agent.pathPending)
-                {
-                    animator.SetFloat(hashMoveSpeed, 0);
-                    animator.SetBool(hashIsMoving, false);
-                    agent.ResetPath();
-                }
+
+                animator.SetFloat(hashMoveSpeed, 0);
+                animator.SetBool(hashIsMoving, false);
+                agent.ResetPath();
 
                 if (target != null)
                 {
@@ -202,7 +199,6 @@ namespace RPG.Characters
                 }
             }
 
-            AttackTarget();
         }
 
         protected void OnAnimatorMove()
@@ -222,6 +218,9 @@ namespace RPG.Characters
         {
             foreach (AttackBehaviour behaviour in attackBehaviours)
                 behaviour.targetMask = targetMask;
+
+            GetComponent<AttackStateController>().enterAttackStateHandler += OnEnterAttackState;
+            GetComponent<AttackStateController>().exitAttackStateHandler += OnExitAttackState;
         }
 
         private void CheckAttackBehaviour()
@@ -275,6 +274,7 @@ namespace RPG.Characters
                     animator.SetInteger(hashAttackIndex, CurrentAttackBehaviour.animationIndex);
                     animator.SetTrigger(hashAttack);
                     animator.SetBool(hashIsInBattle, true);
+                    battleTime = 0f;
                 }
             }
         }
@@ -287,6 +287,15 @@ namespace RPG.Characters
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10.0f);
             }
+        }
+
+        public void OnEnterAttackState()
+        {
+            playerStats.AddMana(-2);
+        }
+
+        public void OnExitAttackState()
+        {
         }
 
         #endregion Helper Methods
@@ -310,13 +319,7 @@ namespace RPG.Characters
                 return;
             }
 
-            health -= damage;
-
-            if (battleUI)
-            {
-                battleUI.CurValue = health;
-                battleUI.CreateDamageText(damage);
-            }
+            playerStats.AddHealth(-damage);
 
             if (hitEffectPrefab)
             {
@@ -327,6 +330,7 @@ namespace RPG.Characters
             {
                 animator?.SetTrigger(hashHit);
                 animator?.SetBool(hashIsInBattle, true);
+                battleTime = 0f;
             }
             else
             {
@@ -343,7 +347,9 @@ namespace RPG.Characters
             foreach (ItemBuff buff in itemObject.data.buffs)
             {
                 if (buff.status == CharacterAttribute.Health)
-                    health += buff.value;
+                    playerStats.AddHealth(buff.value);
+                if (buff.status == CharacterAttribute.Mana)
+                    playerStats.AddMana(buff.value);
             }
         }
 
@@ -359,10 +365,9 @@ namespace RPG.Characters
 
         public bool PickupItem(PickupItem item, int amount = 1)
         {
-            if (item.itemObject != null && inventory.AddItem(new Item(item.itemObject), amount))
+            if (item.itemObject != null)
             {
-                Destroy(item.gameObject);
-                return true;
+                return inventory.AddItem(new Item(item.itemObject), amount);
             }
             return false;
         }
