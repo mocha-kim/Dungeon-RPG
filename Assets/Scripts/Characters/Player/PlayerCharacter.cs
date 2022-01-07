@@ -320,6 +320,7 @@ namespace RPG.Characters
             }
 
             playerStats.AddHealth(-damage);
+            Debug.Log("Health: " + playerStats.Health);
 
             if (hitEffectPrefab)
             {

@@ -12,5 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0443fd36fbfa48bbba80667b437dec0, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
+  attributes:
+  - type: 0
+    value:
+      modifiedValue: 100
+  - type: 1
+    value:
+      modifiedValue: 100
+  - type: 2
+    value:
+      modifiedValue: 100
+  - type: 3
+    value:
+      modifiedValue: 100
   level: 0
   exp: 0
