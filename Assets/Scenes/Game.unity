@@ -1765,8 +1765,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f412d1a5eeb8467ab0b468ff3c835e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipment: {fileID: 0}
-  playerStats: {fileID: 0}
+  equipment: {fileID: 11400000, guid: 852e67a33acf1488aa647672e6eaff74, type: 2}
+  playerStats: {fileID: 11400000, guid: 3e40d7e7b8e48416d8a82e7ed224eff0, type: 2}
   attributeText:
   - {fileID: 627825810}
   - {fileID: 2081248162}
