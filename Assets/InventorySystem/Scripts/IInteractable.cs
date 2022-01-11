@@ -9,6 +9,6 @@ public interface IInteractable
         get;
     }
 
-    bool Interact(GameObject other);
+    void Interact(GameObject other);
     void StopInteract(GameObject other);
 }

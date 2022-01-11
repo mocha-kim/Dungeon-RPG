@@ -156,7 +156,15 @@ namespace RPG.Characters
 
             if (target != null)
             {
-                if (!(target.GetComponent<IDamagable>()?.IsAlive ?? false))
+                if (target.GetComponent<IInteractable>() != null)
+                {
+                    float calcDist = Vector3.Distance(target.position, transform.position);
+                    float range = target.GetComponent<IInteractable>().Distance - 0.1f;
+                    if (calcDist > range)
+                        SetTarget(target, range);
+                    FaceToTarget();
+                }
+                else if (!(target.GetComponent<IDamagable>()?.IsAlive ?? false))
                 {
                     RemoveTarget();
                 }
@@ -189,8 +197,8 @@ namespace RPG.Characters
                     if (target.GetComponent<IInteractable>() != null)
                     {
                         IInteractable interactable = target.GetComponent<IInteractable>();
-                        if (interactable.Interact(this.gameObject))
-                            RemoveTarget();
+                        interactable.Interact(this.gameObject);
+                        RemoveTarget();
                     }
                     else if (target.GetComponent<IDamagable>() != null)
                     {
@@ -364,12 +372,11 @@ namespace RPG.Characters
             }
         }
 
-        public bool PickupItem(PickupItem item, int amount = 1)
+        public bool PickupItem(ItemObject itemObject, int amount = 1)
         {
-            if (item.itemObject != null)
-            {
-                return inventory.AddItem(new Item(item.itemObject), amount);
-            }
+            if (itemObject != null)
+                return inventory.AddItem(new Item(itemObject), amount);
+
             return false;
         }
 

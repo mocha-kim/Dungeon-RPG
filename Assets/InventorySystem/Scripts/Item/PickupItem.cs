@@ -14,14 +14,16 @@ namespace RPG.InventorySystem.Items
         public ItemObject itemObject;
         public GameObject particlePrefab;
 
-        public bool Interact(GameObject other)
+        public void Interact(GameObject other)
         {
             float calcDistance = Vector3.Distance(transform.position, other.transform.position);
 
             if (calcDistance > distance)
-                return false;
+                return;
 
-            return other.GetComponent<PlayerCharacter>()?.PickupItem(this) ?? false;
+            PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+            if (player?.PickupItem(itemObject) ?? false)
+                Destroy(gameObject);
         }
 
         public void StopInteract(GameObject other)
