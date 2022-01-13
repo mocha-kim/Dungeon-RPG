@@ -2057,7 +2057,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &134104575
 PrefabInstance:
@@ -4074,6 +4074,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 454930, guid: 196b993d2b0354842bd6fa90eb970550, type: 3}
   m_PrefabInstance: {fileID: 310724943}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &322743922
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6327743668612069217, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: reverseFace
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069217, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: referenceCamera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069218, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069219, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9e4fbebb6cde952428e19243aeb3289f, type: 3}
+    - target: {fileID: 6327743668612069220, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: m_Name
+      value: GroundObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327743668612069223, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
+      propertyPath: itemObject
+      value: 
+      objectReference: {fileID: 11400000, guid: a6be9ace114804f1d8fbc214017fa60f, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8e4296b16e46f447cb71093127dec980, type: 3}
 --- !u!1 &325690518
 GameObject:
   m_ObjectHideFlags: 0
@@ -14353,6 +14426,11 @@ Transform:
   m_Father: {fileID: 1456531466}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &941660376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4008039701890183394, guid: 9b96858e748f843a88d17ed0b9ed48d1, type: 3}
+  m_PrefabInstance: {fileID: 4008039702664209209}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &945245727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19539,6 +19617,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4008039701890383232, guid: 9b96858e748f843a88d17ed0b9ed48d1, type: 3}
   m_PrefabInstance: {fileID: 4008039702664209209}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1444994755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941660376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7914c1a2e7e634573911374f12cc854a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questDatabase: {fileID: 11400000, guid: bc1217635ebed4b91bb8e1084db8b87e, type: 2}
 --- !u!1001 &1446630565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19722,25 +19813,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 127002, guid: 99cdb7462838a6342bd2288456e75888, type: 3}
   m_PrefabInstance: {fileID: 1348251294}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1461210246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461210243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05c3bb07529d543f8be33bdd61fafcb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    name: Ghost
-    sentences:
-    - Hello.
-    - This is your first combat, right?
-    - ..good luck.
-  distance: 2
 --- !u!136 &1461210247
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -19755,6 +19827,32 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0, y: 1, z: -0}
+--- !u!114 &1461210248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461210243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad007c70646d417499271d82a6e0466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 11400000, guid: 0bb4bb2c3e7d046e3823c6cfa8091701, type: 2}
+  readyDialogue:
+    name: Ghost
+    sentences:
+    - I don't want to see that creepy skeletons
+    - I hope someone destroy them
+  acceptedDialogue:
+    name: Ghost
+    sentences:
+    - I can see 'someone' to destory skeletons...
+  completedDialogue:
+    name: Ghost
+    sentences:
+    - Oh, thanks. I can take a break now..
 --- !u!1001 &1478302194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29646,7 +29744,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8093306511880633320, guid: 38e3a16c40df5440d96677db69ba288a, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8093306511880633320, guid: 38e3a16c40df5440d96677db69ba288a, type: 3}
       propertyPath: m_LocalPosition.x

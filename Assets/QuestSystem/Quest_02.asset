@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Quest_02
   m_EditorClassIdentifier: 
   data:
-    id: 0
-    type: 0
-    targetID: 0
-    count: 0
+    id: 1
+    type: 1
+    targetID: 1
+    count: 1
     completedCount: 0
-    rewardExp: 0
-    rewardGold: 0
+    rewardExp: 10
+    rewardGold: 20
     rewardItemIds: 
-    title: 
+    title: Acquire Bone Item
     description: 
-  stats: 0
+  status: 0

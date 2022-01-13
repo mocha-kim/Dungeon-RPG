@@ -16,11 +16,11 @@ MonoBehaviour:
     id: 0
     type: 0
     targetID: 0
-    count: 0
+    count: 1
     completedCount: 0
-    rewardExp: 0
-    rewardGold: 0
-    rewardItemIds: 
-    title: 
+    rewardExp: 10
+    rewardGold: 10
+    rewardItemIds: ffffffff
+    title: Destory Skeleton
     description: 
-  stats: 0
+  status: 0

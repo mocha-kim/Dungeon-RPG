@@ -18,13 +18,13 @@ MonoBehaviour:
     slots:
     - allowedItems: 
       item:
-        id: 0
+        id: -1
         name: 
         buffs: []
-      amount: 1
+      amount: 0
     - allowedItems: 
       item:
-        id: 2
+        id: -1
         name: 
         buffs: []
       amount: 1
