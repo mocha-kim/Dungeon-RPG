@@ -113,27 +113,6 @@ namespace RPG.Characters
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
-                {
-                    Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
-                    RemoveTarget();
-
-                    // Move character
-                    agent.SetDestination(hit.point);
-
-                    if (picker)
-                    {
-                        picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                        picker.SetPosition(hit);
-                    }
-                }
-            }
-            else if (!isOnUI && Input.GetMouseButtonDown(1))
-            {
-                // Screen to world
-                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
-                RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100, targetMask))
                 {
                     Debug.Log("Target set " + hit.collider.name + " " + hit.point);
@@ -151,6 +130,20 @@ namespace RPG.Characters
                     IInteractable interactable = hit.collider.GetComponent<IInteractable>();
                     if (interactable != null)
                         SetTarget(hit.collider.transform, interactable.Distance);
+                }
+                else if (Physics.Raycast(ray, out hit, 100, groundLayerMask))
+                {
+                    Debug.Log("Ray hit " + hit.collider.name + " " + hit.point);
+                    RemoveTarget();
+
+                    // Move character
+                    agent.SetDestination(hit.point);
+
+                    if (picker)
+                    {
+                        picker.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                        picker.SetPosition(hit);
+                    }
                 }
             }
 
