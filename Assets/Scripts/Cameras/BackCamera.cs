@@ -12,8 +12,12 @@ public class BackCamera : MonoBehaviour
     public float lookAtHeight = 2f;
     public float smoothSpeed = 0.5f;
 
+    private float x;
+    public float xRotSpeed = 160.0f;
+
     private Vector3 boxPosition;
     public Vector3 boxSize = new Vector3(4, 2, 2);
+    Quaternion rotation;
 
     public Transform target;
 
@@ -25,6 +29,12 @@ public class BackCamera : MonoBehaviour
 
     private void Start()
     {
+        Vector3 angles = transform.eulerAngles;
+
+        x = angles.y;
+
+        rotation = Quaternion.AngleAxis(-180f, Vector3.up);
+
         HandleCamera();
     }
 
@@ -35,7 +45,7 @@ public class BackCamera : MonoBehaviour
         boxPosition = transform.position;
         boxPosition.z += 2f;
 
-        Collider[] targets = Physics.OverlapBox(boxPosition, boxSize * 0.5f, transform.rotation, obstacleMask);
+        Collider[] targets = Physics.OverlapBox(boxPosition, boxSize * 0.5f, Quaternion.Euler(transform.forward), obstacleMask);
 
         foreach (Collider target in targets)
         {
@@ -45,24 +55,31 @@ public class BackCamera : MonoBehaviour
 
     IEnumerator disableRayHitObject(GameObject go)
     {
-        if (go.activeSelf)
-            go.SetActive(false);
+        MeshRenderer renderer = go.GetComponent<MeshRenderer>();
+        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
         yield return new WaitForSeconds(1.0f);
 
-        go.SetActive(true);
+        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
     }
 
     public void HandleCamera()
     {
         if (!target) return;
 
+        if (Input.GetMouseButton(1))
+        {
+            x += Input.GetAxis("Mouse X") * xRotSpeed * distance * 0.02f;
+
+            rotation = Quaternion.Euler(0, x, 0);
+            transform.rotation = rotation;
+        }
         // Calc world position vector
         Vector3 worldPosition = (Vector3.forward * distance) + (Vector3.up * height);
         //Debug.DrawLine(target.position, worldPosition, Color.red);
 
         // Calc rotate vector
-        Vector3 rotatedVector = Quaternion.AngleAxis(180f, Vector3.up) * worldPosition;
+        Vector3 rotatedVector = rotation * worldPosition;
         //Debug.DrawLine(target.position, rotatedVector, Color.green);
 
         // Move camera position
@@ -87,8 +104,5 @@ public class BackCamera : MonoBehaviour
             Gizmos.DrawSphere(lookAtPosition, 0.25f);
         }
         Gizmos.DrawSphere(transform.position, 0.25f);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(boxPosition, boxSize);
     }
 }
