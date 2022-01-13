@@ -55,6 +55,8 @@ namespace RPG.InventorySystem.Inventory
             else
                 slot.AddAmount(amount);
 
+            QuestManager.Instance.ProcessQuest(QuestType.AcquireItem, item.id);
+
             return true;
         }
 

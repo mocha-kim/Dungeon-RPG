@@ -124,7 +124,11 @@ namespace RPG.Characters
             }
             else
             {
+                if (battleUI != null)
+                    battleUI.enabled = false;
+
                 stateMachine.ChangeState<DeadState>();
+                QuestManager.Instance.ProcessQuest(QuestType.DestoryEnemy, 0);
             }
         }
 
