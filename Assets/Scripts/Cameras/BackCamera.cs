@@ -7,17 +7,16 @@ public class BackCamera : MonoBehaviour
 {
     #region Variables
 
-    public float height = 1f;
-    public float distance = 3f;
+    public Vector3 offset;
     public float lookAtHeight = 2f;
     public float smoothSpeed = 0.5f;
+    private float distance;
 
     private float x;
-    public float xRotSpeed = 160.0f;
+    public float xRotSpeed = 10.0f;
 
     private Vector3 boxPosition;
     public Vector3 boxSize = new Vector3(4, 2, 2);
-    Quaternion rotation;
 
     public Transform target;
 
@@ -29,13 +28,9 @@ public class BackCamera : MonoBehaviour
 
     private void Start()
     {
-        Vector3 angles = transform.eulerAngles;
-
-        x = angles.y;
-
-        rotation = Quaternion.AngleAxis(-180f, Vector3.up);
-
-        HandleCamera();
+        distance = Vector3.Distance(transform.position, target.position);
+        offset = offset.normalized;
+        transform.position = target.position + offset * distance;
     }
 
     private void LateUpdate()
@@ -56,11 +51,16 @@ public class BackCamera : MonoBehaviour
     IEnumerator disableRayHitObject(GameObject go)
     {
         MeshRenderer renderer = go.GetComponent<MeshRenderer>();
-        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        if (renderer != null)
+        {
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
-        yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(1.0f);
 
-        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+        else
+            yield return null;
     }
 
     public void HandleCamera()
@@ -69,28 +69,23 @@ public class BackCamera : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            x += Input.GetAxis("Mouse X") * xRotSpeed * distance * 0.02f;
+            x = Input.GetAxis("Mouse X") * xRotSpeed;
 
-            rotation = Quaternion.Euler(0, x, 0);
-            transform.rotation = rotation;
+            transform.RotateAround(target.transform.position, Vector3.up, x);
+
+            offset = (transform.position - target.position).normalized;
         }
-        // Calc world position vector
-        Vector3 worldPosition = (Vector3.forward * distance) + (Vector3.up * height);
-        //Debug.DrawLine(target.position, worldPosition, Color.red);
 
-        // Calc rotate vector
-        Vector3 rotatedVector = rotation * worldPosition;
-        //Debug.DrawLine(target.position, rotatedVector, Color.green);
+        Vector3 finalPosition = target.position + offset * distance;
+        //float curDis = Vector3.Distance(finalPosition, target.position);
+        //if (curDis < distance)
+        //    finalPosition += (target.position - transform.position).normalized * (curDis - distance);
 
-        // Move camera position
-        Vector3 flatTargetPosition = target.position;
-        flatTargetPosition.y += lookAtHeight;
-
-        Vector3 finalPosition = flatTargetPosition + rotatedVector;
-        //Debug.DrawLine(target.position, finalPosition, Color.blue);
+        Vector3 lookAtPosition = target.position;
+        lookAtPosition.y += lookAtHeight;
 
         transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refVelocity, smoothSpeed);
-        transform.LookAt(flatTargetPosition);
+        transform.LookAt(lookAtPosition);
     }
 
     private void OnDrawGizmos()
